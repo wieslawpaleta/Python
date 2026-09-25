@@ -919,3 +919,106 @@
 
 ## Tuples/Tuple Methods, Tuples/Tuple Exercises, Tuples/Tuples Code Challenge,
 ## Sets/Sets
+# myset = {"apple", "banana", "cherry"}
+# print(myset)
+
+# thisset = {"apple", "banana", "cherry", True, 1, 2, False, 0}
+# print(thisset)
+# print(len(thisset))
+# print(type(thisset))
+
+# thisset = set(("apple", "banana", "cherry"))
+# print(thisset)
+
+
+##Sets/Access Set Items
+# thisset = {"apple", "banana", "cherry"}
+
+# for x in thisset:
+#     print(x)
+
+# print("banana" in thisset)
+# print("banana" not in thisset)
+
+
+##Sets/Add Set Items
+# thisset = {"apple", "banana", "cherry"}
+
+# thisset.add("orange")
+
+# print(thisset)
+
+# mylist = ["kiwi", "orange"]
+
+# thisset.update(mylist)
+
+# print(thisset)
+
+
+##Sets/Remove Set Items
+# thisset = {"apple", "banana", "cherry", "mango", "orange", "strawberry"}
+
+# thisset.remove("banana")
+# thisset.discard("ananas")
+
+# print(thisset)
+
+# x = thisset.pop()
+
+# print(x)
+
+# thisset.clear()
+# print(thisset)
+
+# del thisset
+
+# print(thisset)
+
+
+##Sets/Loop Sets
+# thisset = {"apple", "banana", "cherry"}
+
+# for x in thisset:
+#     print(x)
+
+
+##Sets/Join Sets
+# set1 = {"a", "b", "c"}
+# set2 = {1, 2, 3}
+
+# set3 = set1.union(set2)
+# print(set3)
+
+# set1 = {"a", "b", "c"}
+# set2 = {1, 2, 3}
+
+# set3 = set1 | set2
+# print(set3)
+
+# set1 = {"a", "b", "c"}
+# set2 = {1, 2, 3}
+# set3 = {"John", "Elena"}
+# set4 = {"apple", "bananas", "cherry"}
+
+# myset = set1.union(set2, set3, set4)
+# print(myset)
+
+# set1 = {"a", "b", "c"}
+# set2 = {1, 2, 3}
+# set3 = {"John", "Elena"}
+# set4 = {"apple", "bananas", "cherry"}
+
+# myset = set1 | set2 | set3 | set4
+# print(myset)
+
+x = {"a", "b", "c"}
+y = (1, 2, 3)
+
+z = x.union(y)
+print(z)
+
+set1 = {"a", "b", "c"}
+set2 = {1, 2, 3}
+
+set1.update(set2)
+print(set1)
