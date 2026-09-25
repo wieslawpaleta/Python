@@ -1,6 +1,7 @@
 import math
 
 
+#Rectangle, Square formulas
 class ClassicRectangle:
     def __init__(self, length, width):
         self.length = length
@@ -27,6 +28,20 @@ your_powsquare = PowSquare(5)
 print(your_powsquare.areaPS())
 
 
+class DiagonalSquare:
+    def __init__(self, diagonal):
+        self.diagonal = diagonal
+
+    def areaDS(self):
+        calculation = self.diagonal ** 2 / 2
+        return f"The area of your square is: {calculation}"
+
+your_diagonalsquare = DiagonalSquare(5)
+
+print(your_diagonalsquare.areaDS())
+
+
+#Triangle formulas
 class ClassicTriangle:
     def __init__(self, base, height):
         self.base = base
@@ -75,8 +90,48 @@ class EquilateralCircumscribedCircleTriangle:
         calculation = round((3 * self.Radius ** 2) * 2 ** (1/2) / 4, 4)
         return f"The area of your triangle is: {calculation}"
 
-your_triangleICT = EquilateralCircumscribedCircleTriangle(5)
+your_triangleECCT = EquilateralCircumscribedCircleTriangle(5)
 
-print(your_triangleICT.areaECCT())
+print(your_triangleECCT.areaECCT())
 
+
+class EquilateralInscribedCircleTriangle:
+    def __init__ (self, radius):
+        self.radius = radius
+
+    def areaEICT(self):
+        calculation = round((3 * self.radius ** 2) * 3 ** (1/2), 4)
+        return f"The area of your triangle is: {calculation}"
+
+your_triangleEICT = EquilateralInscribedCircleTriangle(5)
+
+print(your_triangleEICT.areaEICT())
+
+
+#Circle formulas
+#pi = 3.14159
+class ClassicCircle:
+    def __init__ (self, radius):
+        self.radius = radius
+
+    def areaCC(self):
+        calculation = round(3.14159 * self.radius, 4)
+        return f"The area of your circle is: {calculation}"
+
+your_circleCC = ClassicCircle(5)
+
+print(your_circleCC.areaCC())
+
+
+class DiameterCircle:
+    def __init__ (self, diameter):
+        self.diameter = diameter
+
+    def areaDC(self):
+        calculation = round(3.14159 * self.diameter ** 2 / 4, 4)
+        return f"The area of your circle is: {calculation}"
+
+your_circleDC = DiameterCircle(5)
+
+print(your_circleDC.areaDC())
 
