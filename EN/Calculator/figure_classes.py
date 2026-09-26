@@ -135,3 +135,30 @@ your_circleDC = DiameterCircle(5)
 
 print(your_circleDC.areaDC())
 
+
+class ClassicTrapezoid:
+    def __init__ (self, bottomBase, topBase, height):
+        self.bottomBase = bottomBase
+        self.topBase = topBase
+        self.height = height
+
+    def areaCTrap(self):
+        calculation = round((self.bottomBase + self.topBase / 2) * self.height, 4)
+        return f"The area of your trapezoid is: {calculation}"
+
+your_trapezoidCtrap = ClassicTrapezoid(5, 4, 3)
+
+print(your_trapezoidCtrap.areaCTrap())
+
+class ClassicRhombus:
+    def __init__ (self, diameter1, diameter2):
+        self.diameter1 = diameter1
+        self.diameter2 = diameter2
+
+    def areaRh(self):
+        calculation = round(self.diameter1 * self.diameter2 / 2, 4)
+        return f"The area of your rhombus is: {calculation}"
+
+your_rhombusCRh = ClassicRhombus(5, 4)
+
+print(your_rhombusCRh.areaRh())
