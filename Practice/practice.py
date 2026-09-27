@@ -1096,4 +1096,23 @@
 # print(type(x))
 
 
-##Sets/Set Methods
+##Sets/Set Methods, Sets/Exercises, Sets/Code Challenge,
+##Dictionaries/Dictionaries
+# thisdict = {
+#     "brand": "Ford",
+#     "model": "Focus",
+#     "year": 2001,
+#     "electric": False,
+#     "colours": ["red", "white", "blue"]
+# }
+
+# print(thisdict)
+# print(thisdict["brand"])
+# print(len(thisdict))
+# print(type(thisdict))
+
+# thisdict = dict(name = "John", age = 36, country = "Norway")
+# print(thisdict) 
+
+
+##Dictionaries/Access Dictionary Items
