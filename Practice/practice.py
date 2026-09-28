@@ -1116,3 +1116,57 @@
 
 
 ##Dictionaries/Access Dictionary Items
+# thisdict = {
+#     "brand": "Ford",
+#     "model": "Transit",
+#     "year": 2010
+# }
+
+# x = thisdict["model"]
+# print(x)
+
+# x = thisdict.get("brand")
+# print(x)
+
+# x = thisdict.keys()
+# print(x)
+
+# thisdict["colour"] = "white"
+# print(x)
+
+# x = thisdict.values()
+# print(x)
+
+# thisdict["colour"] = "red"
+# print(x)
+
+# x = thisdict.items()
+# print(x)
+
+# if "model" in thisdict:
+#     print("Yes, 'model' is one of the keys in the thisdict dictionary")
+
+
+##Dictionaries/Change Dictionary Items
+# thisdict = {
+#     "brand": "Ford",
+#     "model": "Transit",
+#     "year": 2010
+# }
+
+# thisdict.update({"year": 2020})
+# print(thisdict)
+
+
+##Dictionaries/Add Dictionary Items
+# thisdict = {
+#   "brand": "Ford",
+#   "model": "Thunderbird",
+#   "year": 1975
+# }
+
+# thisdict.update({"colour": "red"})
+# print(thisdict)
+
+
+##Dictionaries/Remove Dictionary Items
