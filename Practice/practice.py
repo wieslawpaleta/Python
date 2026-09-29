@@ -1170,3 +1170,71 @@
 
 
 ##Dictionaries/Remove Dictionary Items
+# thisdict = {
+#   "brand": "Ford",
+#   "model": "Mustang",
+#   "year": 1964
+# }
+# thisdict.pop("model")
+# print(thisdict)
+# thisdict.popitem()
+# print(thisdict)
+# del thisdict["model"]
+# print(thisdict)
+# thisdict.clear()
+# print(thisdict)
+
+
+##Dictionaries/Loop Dictionaries
+# thisdict = {
+#    "brand": "Ford",
+#    "model": "Mustang",
+#    "year": 1964
+#  }
+# for x in thisdict:
+#     print(x)
+
+# for x in thisdict:
+#     print(thisdict[x])
+
+# for x in thisdict.values():
+#     print(x)
+
+# for x in thisdict.keys():
+#     print(x)
+
+# for x, y in thisdict.items():
+#     print(x, y)
+
+
+##Dictionaries/Copy Dictionaries
+thisdict = {
+    "brand": "Ford",
+    "model": "Mustang",
+    "year": 1964
+  }
+
+# # mydict = thisdict.copy()
+# # print(mydict)
+
+# mydict = dict(thisdict)
+# print(mydict)
+
+
+##Dictionaries/Nested Dictionaries
+thisdict = {
+    "child1" : {
+    "brand": "Ford",
+    "model": "Mustang",
+    "year": 1964
+  },
+  "child2" : {
+      "name" : "Thomas",
+      "year" : 2007
+  },
+  "child3" : {
+      "name" : "Linus",
+      "year" : 2001
+  }
+}
+print(thisdict)
