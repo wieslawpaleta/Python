@@ -1222,19 +1222,58 @@ thisdict = {
 
 
 ##Dictionaries/Nested Dictionaries
-thisdict = {
-    "child1" : {
-    "brand": "Ford",
-    "model": "Mustang",
-    "year": 1964
-  },
-  "child2" : {
-      "name" : "Thomas",
-      "year" : 2007
-  },
-  "child3" : {
-      "name" : "Linus",
-      "year" : 2001
-  }
-}
-print(thisdict)
+# thisdict = {
+#     "child1" : {
+#     "name" : "Emil",
+#     "year" : 2004
+#   },
+#   "child2" : {
+#       "name" : "Thomas",
+#       "year" : 2007
+#   },
+#   "child3" : {
+#       "name" : "Linus",
+#       "year" : 2001
+#   }
+# }
+# print(thisdict)
+
+
+# child1 = {
+#   "name" : "Emil",
+#   "year" : 2004
+#   }
+
+# child2 = {
+#   "name" : "Thomas",
+#   "year" : 2007
+#   }
+# child3 = {
+#   "name" : "Linus",
+#   "year" : 2001
+# }
+
+# myfamily = {
+#   "child1" : child1,
+#   "child2" : child2,
+#   "child3" : child3
+# }
+
+# print(myfamily)
+# print(myfamily["child2"]["name"])
+
+# for x, obj in myfamily.items():
+#     print(x)
+
+#     for y in obj:
+#         print(y + ':', obj[y])
+
+
+##Dictionaries/Dictionary Methods
+##Dictionaries/Dictionary Exercises
+##Dictionaries/Dictionary Code Challenge
+##If...Else/If
+a = 33
+b = 200
+if b > a:
+    print("b is greater than a")
