@@ -1,5 +1,19 @@
 import math
 
+class ClassicCuboid:
+    def __init__ (self, aSide, bSide, cSide):
+        self.aSide = aSide
+        self.bSide = bSide
+        self.cSide = cSide
+
+    def volumeClCubo(self):
+        calculation = round(self.aSide * self.bSide * self.cSide)
+        return f"The volume of your cuboid is: {calculation}"
+
+your_cuboidClCubo = ClassicCuboid(5, 5, 5)
+
+print(your_cuboidClCubo.volumeClCubo())
+
 
 class ClassicCube:
     def __init__ (self, side):
@@ -26,6 +40,7 @@ your_sphereClsp = ClassicSphere(5)
 
 print(your_sphereClsp.volumeClsp())
 
+
 class ClassicCylinder:
     def __init__(self, radius, height):
         self.radius = radius
@@ -38,6 +53,7 @@ class ClassicCylinder:
 your_cylinderClcy = ClassicCylinder(5, 5)
 
 print(your_cylinderClcy.volumeClcy())
+
 
 class ClassicCone:
     def __init__(self, radius, height):

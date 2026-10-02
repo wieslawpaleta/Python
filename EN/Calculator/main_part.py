@@ -1,11 +1,19 @@
-
-print("Hello!")
-
-chooseFigure = input("Choose your figure: ")
-
-chooseType = input("Are you looking for area or volume: ")
-
-chooseFormula = input("Choose your formula: ")
+import math
+import figure_classes_area
+import figure_classes_volume
 
 
-print(f"The {chooseType} of your {chooseFigure} is: ")
+def główne_okno():
+    while True:
+
+        print("Hello!")
+
+        chooseFigure = input("Choose your figure: ")
+        chooseType = input("Are you looking for area or volume? ")
+        if chooseFigure
+
+
+        chooseFormula = input("Choose your formula: ")
+
+
+        print(f"The {chooseType} of your {chooseFigure} is: ")
