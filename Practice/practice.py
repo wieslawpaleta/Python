@@ -1388,3 +1388,148 @@
 # a = 2
 # b = 330
 # print("A") if a > b else print("B")
+
+# a = 10
+# b = 20
+# bigger = a if a > b else b
+# print("Bigger is", bigger)
+
+# a = 330
+# b = 330
+
+# print("A") if a > b else print("=") if a == b else print("B")
+
+# x = 15
+# y = 20
+# max_value = x if x > y else y
+# print("Maximum value:", max_value)
+
+# username = ""
+# display_name = username if username else "Guest"
+# print("Welcome,", display_name)
+
+
+##If...Else/Logical Operators
+# a = 200
+# b = 33
+# c = 500
+# if a > b and c > a:
+#     print("Both conditions are True")
+
+# a = 200
+# b = 33
+# c = 500
+# if a > b or a > c:
+#     print("At least one of the conditions is True")
+
+# a = 33
+# b = 200
+# if not a > b:
+#     print("a is NOT greater than b")
+
+# age = 25
+# is_student = False
+# has_discount_code = True
+
+# if (age < 18 or age > 65) and not is_student or has_discount_code:
+#     print("Discount applies!")
+
+# temperature = 25
+# is_raining = False
+# is_weekend = True
+
+# if (temperature > 20 and not is_raining) or is_weekend:
+#     print("Great day for outddor activities!")
+
+# username = "Tobias"
+# password = "secret123"
+# is_verified = True
+
+# if username and password and is_verified:
+#     print("Login successful")
+# else:
+#     print("Login failed")
+
+# score = 85
+
+# if score >= 0 and score <= 100:
+#     print("Valid score")
+# else:
+#     print("Invalid score")
+
+
+##if...Else/Nested If
+# x = 41
+
+# if x > 10:
+#     print("Above ten,")
+#     if x > 20:
+#         print("and also above 20!")
+#     else:
+#         print("but not above 20.")
+
+# age = 25
+# has_license = True
+
+# if age >= 18:
+#     if has_license:
+#         print("You can drive")
+#     else:
+#         print("You need a license")
+# else:
+#     print("You are too young to drive")
+
+# score = 85
+# attendance = 90
+# submitted = True
+
+# if score >= 60:
+#     if attendance >= 80:
+#         if submitted:
+#             print("Pass with good standing")
+#         else:
+#             print("Pass but missing assignment")
+#     else:
+#         print("Pass but low attendance")
+# else:
+#     print("Fail")
+
+# temperature = 25
+# is_sunny = True
+
+# if temperature > 20:
+#     if is_sunny:
+#         print("Perfect beach weather!")
+
+# temperature = 25
+# is_sunny = True
+
+# if temperature > 20 and is_sunny:
+#     print("Perfect beach weather!")
+
+# username = "Emil"
+# password = "python123"
+# is_active = True
+
+# if username:
+#     if password:
+#         if is_active:
+#             print("Login successful")
+#         else:
+#             print("Account is not active")
+#     else: print("Password required")
+# else:
+#     print("Username required")
+
+# score = 92
+# extra_credit = 5
+
+# if score >= 90:
+#     if extra_credit > 0:
+#         print("A+ grade")
+#     else:
+#         print("A grade")
+# elif score >= 80:
+#     print("B grade")
+# else:
+#     print("C grade or below")
