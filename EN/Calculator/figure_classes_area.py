@@ -11,9 +11,6 @@ class ClassicRectangle:
         calculation = self.length * self.width
         return f"The area of your rectangle is: {calculation}" 
 
-your_rectangle = ClassicRectangle(5, 6)
-
-print(your_rectangle.areaCR())
 
 class PowSquare:
     def __init__(self, length):
@@ -23,10 +20,6 @@ class PowSquare:
         calculation = pow(self.length, 2)
         return f"The area of your square is: {calculation}"
 
-your_powsquare = PowSquare(5)
-
-print(your_powsquare.areaPS())
-
 
 class DiagonalSquare:
     def __init__(self, diagonal):
@@ -35,10 +28,6 @@ class DiagonalSquare:
     def areaDS(self):
         calculation = self.diagonal ** 2 / 2
         return f"The area of your square is: {calculation}"
-
-your_diagonalsquare = DiagonalSquare(5)
-
-print(your_diagonalsquare.areaDS())
 
 
 class ClassicTrapezoid:
@@ -51,9 +40,6 @@ class ClassicTrapezoid:
         calculation = round((self.bottomBase + self.topBase / 2) * self.height, 4)
         return f"The area of your trapezoid is: {calculation}"
 
-your_trapezoidCtrap = ClassicTrapezoid(5, 4, 3)
-
-print(your_trapezoidCtrap.areaCTrap())
 
 class ClassicRhombus:
     def __init__ (self, diameter1, diameter2):
@@ -64,10 +50,6 @@ class ClassicRhombus:
         calculation = round(self.diameter1 * self.diameter2 / 2, 4)
         return f"The area of your rhombus is: {calculation}"
 
-your_rhombusCRh = ClassicRhombus(5, 4)
-
-print(your_rhombusCRh.areaRh())
-
 
 class ClassicRegularHexagon:
     def __init__(self, side):
@@ -76,10 +58,6 @@ class ClassicRegularHexagon:
     def CRHex(self):
         calculation = round(6 * (self.side ** 2 * 3 ** (1/2) / 4), 4)
         return f"The area of your hexagon is: {calculation}"
-
-your_hexagonCRHex = ClassicRegularHexagon(5)
-
-print(your_hexagonCRHex.CRHex())
 
 
 #Triangle formulas
@@ -92,10 +70,6 @@ class ClassicTriangle:
         calculation = round(self.base * self.height / 2, 4)
         return f"The area of your triangle is: {calculation}"
 
-your_triangleCT = ClassicTriangle(4, 5)
-
-print(your_triangleCT.areaCT())
-
 
 class EquilateralTriangleA234:
     def __init__(self, side):
@@ -104,10 +78,6 @@ class EquilateralTriangleA234:
     def areaETA234(self):
         calculation = round(self.side ** 2 * 3 ** (1/2) / 4, 4)
         return f"The area of your equilateral triangle is: {calculation}"
-
-your_triangleET = EquilateralTriangleA234(5)
-
-print(your_triangleET.areaETA234())
 
 
 class EquilateralTriangleHeight:
@@ -118,10 +88,6 @@ class EquilateralTriangleHeight:
         calculation = round((self.height ** 2) * (3 ** (1/2)) / 3, 4)
         return f"The area of your triangle is: {calculation}"
 
-your_triangleTH = EquilateralTriangleHeight(5)
-
-print(your_triangleTH.areaETH())
-
 
 class EquilateralCircumscribedCircleTriangle:
     def __init__ (self, Radius):
@@ -131,10 +97,6 @@ class EquilateralCircumscribedCircleTriangle:
         calculation = round((3 * self.Radius ** 2) * 2 ** (1/2) / 4, 4)
         return f"The area of your triangle is: {calculation}"
 
-your_triangleECCT = EquilateralCircumscribedCircleTriangle(5)
-
-print(your_triangleECCT.areaECCT())
-
 
 class EquilateralInscribedCircleTriangle:
     def __init__ (self, radius):
@@ -143,10 +105,6 @@ class EquilateralInscribedCircleTriangle:
     def areaEICT(self):
         calculation = round((3 * self.radius ** 2) * 3 ** (1/2), 4)
         return f"The area of your triangle is: {calculation}"
-
-your_triangleEICT = EquilateralInscribedCircleTriangle(5)
-
-print(your_triangleEICT.areaEICT())
 
 
 #Circle formulas
@@ -159,10 +117,6 @@ class ClassicCircle:
         calculation = round(3.14159 * self.radius, 4)
         return f"The area of your circle is: {calculation}"
 
-your_circleCC = ClassicCircle(5)
-
-print(your_circleCC.areaCC())
-
 
 class DiameterCircle:
     def __init__ (self, diameter):
@@ -171,10 +125,3 @@ class DiameterCircle:
     def areaDC(self):
         calculation = round(3.14159 * self.diameter ** 2 / 4, 4)
         return f"The area of your circle is: {calculation}"
-
-your_circleDC = DiameterCircle(5)
-
-print(your_circleDC.areaDC())
-
-
-

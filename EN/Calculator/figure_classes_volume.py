@@ -10,10 +10,6 @@ class ClassicCuboid:
         calculation = round(self.aSide * self.bSide * self.cSide)
         return f"The volume of your cuboid is: {calculation}"
 
-your_cuboidClCubo = ClassicCuboid(5, 5, 5)
-
-print(your_cuboidClCubo.volumeClCubo())
-
 
 class ClassicCube:
     def __init__ (self, side):
@@ -23,10 +19,6 @@ class ClassicCube:
         calculation = round(self.side ** 3, 4)
         return f"The volume of your cube is: {calculation}"
 
-your_cubeClc = ClassicCube(5)
-
-print(your_cubeClc.volumeClc())
-
 
 class ClassicSphere:
     def __init__(self, radius):
@@ -35,10 +27,6 @@ class ClassicSphere:
     def volumeClsp(self):
         calculation = round(4 / 3 * 3.14159 * self.radius ** 3, 4)
         return f"The volume of your sphere is: {calculation}"
-
-your_sphereClsp = ClassicSphere(5)
-
-print(your_sphereClsp.volumeClsp())
 
 
 class ClassicCylinder:
@@ -50,10 +38,6 @@ class ClassicCylinder:
         calculation = round((3.14159 * self.radius ** 2) * self.height, 4)
         return f"The volume of your cylinder is: {calculation}"
 
-your_cylinderClcy = ClassicCylinder(5, 5)
-
-print(your_cylinderClcy.volumeClcy())
-
 
 class ClassicCone:
     def __init__(self, radius, height):
@@ -63,7 +47,3 @@ class ClassicCone:
     def volumeClco(self):
         calculation = round(1 / 3 * 3.14159 * self.radius ** 2 * self.height, 4)
         return f"The volume of your cone is: {calculation}"
-
-your_coneClco = ClassicCone(5, 5)
-
-print(your_coneClco.volumeClco())

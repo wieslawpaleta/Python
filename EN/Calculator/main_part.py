@@ -8,12 +8,24 @@ def główne_okno():
 
         print("Hello!")
 
-        chooseFigure = input("Choose your figure: ")
         chooseType = input("Are you looking for area or volume? ")
-        if chooseFigure
+        chooseFigure = input("\nChoose your figure: ")
+        if chooseType and chooseFigure:
+            fusionAreaVolume = "figure_classes_" + chooseType
+            fusionFigure =
+            return fusionAreaVolume
+    
+        else: 
+            return "kiełbasa"
 
 
         chooseFormula = input("Choose your formula: ")
 
 
         print(f"The {chooseType} of your {chooseFigure} is: ")
+
+
+
+if __name__ == "__main__":
+    główne_okno() 
+     
