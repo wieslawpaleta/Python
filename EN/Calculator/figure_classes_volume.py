@@ -1,49 +1,49 @@
 import math
 
-class ClassicCuboid:
+class StandardCuboid:
     def __init__ (self, aSide, bSide, cSide):
         self.aSide = aSide
         self.bSide = bSide
         self.cSide = cSide
 
-    def volumeClCubo(self):
+    def volumeStCubo(self):
         calculation = round(self.aSide * self.bSide * self.cSide)
         return f"The volume of your cuboid is: {calculation}"
 
 
-class ClassicCube:
+class StandardCube:
     def __init__ (self, side):
         self.side = side
 
-    def volumeClc(self):
+    def volumeStc(self):
         calculation = round(self.side ** 3, 4)
         return f"The volume of your cube is: {calculation}"
 
 
-class ClassicSphere:
+class StandardSphere:
     def __init__(self, radius):
         self.radius = radius
 
-    def volumeClsp(self):
+    def volumeStsp(self):
         calculation = round(4 / 3 * 3.14159 * self.radius ** 3, 4)
         return f"The volume of your sphere is: {calculation}"
 
 
-class ClassicCylinder:
+class StandardCylinder:
     def __init__(self, radius, height):
         self.radius = radius
         self.height = height
 
-    def volumeClcy(self):
+    def volumeStcy(self):
         calculation = round((3.14159 * self.radius ** 2) * self.height, 4)
         return f"The volume of your cylinder is: {calculation}"
 
 
-class ClassicCone:
+class StandardCone:
     def __init__(self, radius, height):
         self.radius = radius
         self.height = height
 
-    def volumeClco(self):
+    def volumeStco(self):
         calculation = round(1 / 3 * 3.14159 * self.radius ** 2 * self.height, 4)
         return f"The volume of your cone is: {calculation}"
