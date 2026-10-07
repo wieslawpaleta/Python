@@ -1533,3 +1533,213 @@
 #     print("B grade")
 # else:
 #     print("C grade or below")
+
+
+##If...Else/Pass Statement/Code Challange
+# a = 33
+# b = 200
+
+# if b > 1:
+#     pass
+
+# age = 20
+
+# if age < 18:
+#     pass
+# else:
+#     print("Access granted")
+
+# value = 50
+
+# if value < 0:
+#     print("Negative value")
+# elif value == 0:
+#     pass #ok ok
+# else: 
+#     print("Positive value")
+
+# def calculate_discount(price):
+#     pass
+
+
+##Match/Match
+# day = 4
+# match day:
+#     case 1:
+#         print("Monday")
+#     case 2:
+#         print("Tuesday")
+#     case 3:
+#         print("Wednesday")
+#     case 4:
+#         print("Thursday")
+#     case 5:
+#         print("Friday")
+#     case 6:
+#         print("Saturday")
+#     case 7:
+#         print("Sunday")
+
+# day = 4
+# match day:
+#     case 6:
+#         print("Today is Saturday")
+#     case 7:
+#         print("Today is Sunday")
+#     case _:
+#         print("Looking forward to the Weekend")
+
+# day = 4
+# match day:
+#     case 1 | 2 | 3 | 4 | 5:
+#         print("Today is a weekday")
+#     case 6 | 7:
+#         print("I love weekends!")
+
+# month = 5
+# day = 4
+# match day:
+#     case 1 | 2 | 3 | 4 | 5 if month == 4:
+#         print("A weekday in April")
+#     case 1 | 2 | 3 | 4 | 5 if month == 5:
+#         print("A weekday in May")
+#     case _:
+#         print("No match")
+
+
+##Match/Match Code Challenge
+##While Loops/While Loops
+##While Loops/While Loops Code Challenge
+# i = 1
+# while i < 6:
+#     print(i)
+#     i += 1
+
+# i = 1
+# while i < 6:
+#     print(i)
+#     if i == 3:
+#         break
+#     i += 1
+
+# i = 0
+# while i < 6:
+#     i += 1
+#     if i == 3:
+#         continue
+#     print(i)
+
+# i = 1
+# while i < 6:
+#     print(i)
+#     i += 1
+# else:
+#     print("i is no longer less than 6")
+
+
+##For Loops/For Loops
+# fruits = ["apple", "banana", "cherry"]
+# for x in fruits:
+#     print(x)
+
+# for x in "banana":
+#     print(x)
+
+# fruits = ["apple", "banana", "cherry"]
+# for x in fruits:
+#     print(x)
+#     if x == "banana":
+#         break
+
+# fruits = ["apple", "banana", "cherry"]
+# for x in fruits:
+    
+#     if x == "banana":
+#         break
+#     print(x)
+
+# fruits = ["apple", "banana", "cherry"]
+# for x in fruits:
+#   if x == "banana":
+#     continue
+#   print(x)
+
+# for x in range(6):
+#     print(x)
+
+# for x in range(2, 6):
+#     print(x)
+
+# for x in range(6):
+#     print(x)
+# else:
+#     print("Finally finished!")
+
+# for x in range(6):
+#     if x == 3: break
+#     print(x)
+# else:
+#     print("Finally finished!")
+
+# adj = ["red", "big", "tasty"]
+# fruits = ["apple", "banana", "cherry"]
+
+# for x in adj:
+#     for y in fruits:
+#         print(x, y)
+
+# for x in [0, 1, 2]:
+#     pass
+
+##For Loops/For Loops Code Challenge
+##Functions/Functions
+# def my_function():
+#     return "Hello from a function"
+
+# my_function()
+
+# message = my_function() + " again"
+# print(message)
+
+# def get_greeting():
+#     return "Hello from a function"
+
+# print(get_greeting())
+
+
+##Functions/Arguments
+# def my_function(fname):
+#     print(fname + " Refsnes")
+
+# my_function("Emil")
+# my_function("Tobias")
+# my_function("Linus")
+
+# def my_function(name):
+#     print("Hello", name)
+
+# my_function("Emil")
+
+# def my_function(fname, lname):
+#     print(fname + " " + lname)
+
+# my_function("Emil", "Refsnes")
+
+# def my_function(name = "friend"):
+#     print("Hello", name)
+
+# my_function("Emil")
+# my_function("Tobias")
+# my_function()
+# my_function("Linus")
+
+def my_function(country = "Norway"):
+    print("I am from", country)
+
+my_function("Sweden")
+my_function("India")
+my_function()
+my_function("Brazil")
+
+
+##Functions/Arguments(Keyword Arguments)
