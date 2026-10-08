@@ -1,23 +1,38 @@
+import os
 import math
 import figure_classes_area
 import figure_classes_volume
+from tkinter import *
+import tkinter as tk
+
+window = Tk()
+
+window.title("My Calculator")
+window.geometry("720x480")
+window.minsize(480, 360)
 
 
-def główne_okno():
-    while True:
+current_dir = os.path.dirname(__file__)
+icon_path = os.path.join(current_dir, "favicon.ico")
+window.iconbitmap(icon_path)
 
-        print("Binary Salute")
-        print("-" * 10)
-        print("Available formulas:\n")
-        print("Areas:")
-        print("1) \"StandardRectangle\" -> area = a * b")
-        print("2) \"PowerSquare\" -> area = a ** 2")
-        print("4) \"DiagonalSquare\" -> area = d  ** 2 / 2")
-        print("5) \"StandardTrapezoid\" -> area = (a + b / 2) * h")
-        print("6) \"StandardRhombus\" -> area = d1 * d2 / 2")
-        print("-" * 10)
-        break
 
-if __name__ == "__main__":
-    główne_okno() 
-     
+image_path = os.path.join(current_dir, "StandardTriangle.png")
+icon = tk.PhotoImage(file=image_path)
+
+
+def count_areaStTriang():
+    pass
+
+btn = tk.Button(window, image=icon, command=lambda: count_areaStTriang)
+btn.pack(pady=1)
+
+window.config(background='#ffffff')
+
+
+frame = Frame(window, bg='#ffffff')
+
+
+standard_triangle_button = Button(frame)
+frame.pack(expand=YES)
+window.mainloop()
