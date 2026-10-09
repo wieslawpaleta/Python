@@ -1,4 +1,5 @@
 import math
+from tkinter import simpledialog
 
 
 #Rectangle, Square, Trapezoid, Rhombus, Hexagon formulas
@@ -62,13 +63,20 @@ class StandardRegularHexagon:
 
 #Triangle formulas
 class StandardTriangle:
-    def __init__(self, base, height):
-        self.base = base
-        self.height = height
+    def __init__(self):
+        pass
 
     def areaStTriang(self):
-        calculation = round(self.base * self.height / 2, 4)
+        base = simpledialog.askfloat("Input", "Pass the base: ")
+        if base is None: 
+            return "Canceled"
+        height = simpledialog.askfloat("Input", "Pass the height:")
+        if height is None: 
+            return "Canceled"
+        calculation = round(base * height / 2, 4)
         return f"The area of your triangle is: {calculation}"
+
+        
 
 
 class EquilateralTriangleA234:
