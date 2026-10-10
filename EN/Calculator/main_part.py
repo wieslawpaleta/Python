@@ -22,11 +22,10 @@ window.iconbitmap(icon_path)
 
 #Classic formula for the area of triangle
 
-image_path = os.path.join(current_dir, "StandardTriangle.png")
-# icon = tk.PhotoImage(file=image_path)
+image_path = os.path.join(current_dir, "Images/StandardTriangle.jpg")
 pil_image = Image.open(image_path)
-resized_image = pil_image.resize((150, 50), Image.Resampling.LANCZOS)
-icon = ImageTk.PhotoImage(resized_image)
+resized_image_areaStTriang = pil_image.resize((150, 50), Image.Resampling.LANCZOS)
+icon = ImageTk.PhotoImage(resized_image_areaStTriang)
 
 btn = tk.Button(window, image=icon, command=lambda: count_areaStTriang())
 btn.pack(pady=1)
@@ -37,6 +36,30 @@ lbl_wynik.pack(pady=5)
 def count_areaStTriang():
     triangle = figure_classes_area.StandardTriangle()
     result = triangle.areaStTriang()
+    
+    if result != "Canceled":
+        lbl_wynik.config(text=result)
+    else:
+        lbl_wynik.config(text="Canceled")
+
+#-----------------------------------------
+
+#Classic formula for the area of rectangle
+
+image_path_areaStRec = os.path.join(current_dir, "Images/StandardRectangle.jpg")
+pil_image_areaStRec = Image.open(image_path_areaStRec)
+resized_image_areaStRec = pil_image_areaStRec.resize((150, 50), Image.Resampling.LANCZOS)
+icon_areaStRec = ImageTk.PhotoImage(resized_image_areaStRec)
+
+btn_areaStRec = tk.Button(window, image=icon_areaStRec, command=lambda: count_areaStRec())
+btn_areaStRec.pack(pady=1)
+
+lbl_wynik_areaStRec = tk.Label(window, text="", font=("Arial", 12))
+lbl_wynik_areaStRec.pack(pady=6)
+
+def count_areaStRec():
+    triangle = figure_classes_area.StandardRectangle()
+    result = triangle.areaStRec()
     
     if result != "Canceled":
         lbl_wynik.config(text=result)
