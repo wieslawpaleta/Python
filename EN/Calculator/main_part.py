@@ -19,6 +19,11 @@ window.iconbitmap(icon_path)
 
 
 #Buttons with images in order to 
+#Here are results
+
+lbl_wynik = tk.Label(window, text="Choose your figure", font=("Arial", 12))
+lbl_wynik.pack(pady=10)
+
 
 #Classic formula for the area of triangle
 
@@ -29,9 +34,6 @@ icon = ImageTk.PhotoImage(resized_image_areaStTriang)
 
 btn = tk.Button(window, image=icon, command=lambda: count_areaStTriang())
 btn.pack(pady=1)
-
-lbl_wynik = tk.Label(window, text="", font=("Arial", 12))
-lbl_wynik.pack(pady=5)
 
 def count_areaStTriang():
     triangle = figure_classes_area.StandardTriangle()
@@ -54,9 +56,6 @@ icon_areaStRec = ImageTk.PhotoImage(resized_image_areaStRec)
 btn_areaStRec = tk.Button(window, image=icon_areaStRec, command=lambda: count_areaStRec())
 btn_areaStRec.pack(pady=1)
 
-lbl_wynik_areaStRec = tk.Label(window, text="", font=("Arial", 12))
-lbl_wynik_areaStRec.pack(pady=6)
-
 def count_areaStRec():
     triangle = figure_classes_area.StandardRectangle()
     result = triangle.areaStRec()
@@ -67,6 +66,49 @@ def count_areaStRec():
         lbl_wynik.config(text="Canceled")
 
 #-----------------------------------------
+
+#Classic formula for the area of circle
+
+image_path_areaStCirc = os.path.join(current_dir, "Images/StandardCircle.jpg")
+pil_image_areaStCirc = Image.open(image_path_areaStCirc)
+resized_image_areaStCirc = pil_image_areaStCirc.resize((150, 50), Image.Resampling.LANCZOS)
+icon_areaStCirc = ImageTk.PhotoImage(resized_image_areaStCirc)
+
+btn_areaStCirc = tk.Button(window, image=icon_areaStCirc, command=lambda: count_areaStCirc())
+btn_areaStCirc.pack(pady=1)
+
+def count_areaStCirc():
+    circle = figure_classes_area.StandardCircle()
+    result = circle.areaStCirc()
+    
+    if result != "Canceled":
+        lbl_wynik.config(text=result)
+    else:
+        lbl_wynik.config(text="Canceled")
+
+#-----------------------------------------
+
+#Classic formula for the area of rhombus
+
+image_path_areaStRhom = os.path.join(current_dir, "Images/StandardRhombus.jpg")
+pil_image_areaStRhom = Image.open(image_path_areaStRhom)
+resized_image_areaStRhom = pil_image_areaStRhom.resize((150, 50), Image.Resampling.LANCZOS)
+icon_areaStRhom = ImageTk.PhotoImage(resized_image_areaStRhom)
+
+btn_areaStRhom = tk.Button(window, image=icon_areaStRhom, command=lambda: count_areaStRhom())
+btn_areaStRhom.pack(pady=1)
+
+def count_areaStRhom():
+    circle = figure_classes_area.StandardRhombus()
+    result = circle.areaStRhom()
+    
+    if result != "Canceled":
+        lbl_wynik.config(text=result)
+    else:
+        lbl_wynik.config(text="Canceled")
+
+#-----------------------------------------
+
 
 window.config(background="#FFFFFF")
 

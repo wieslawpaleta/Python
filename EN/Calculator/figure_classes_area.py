@@ -4,12 +4,17 @@ from tkinter import simpledialog
 
 #Rectangle, Square, Trapezoid, Rhombus, Hexagon formulas
 class StandardRectangle:
-    def __init__(self, length, width):
-        self.length = length
-        self.width = width
+    def __init__(self):
+        pass
 
     def areaStRec(self):
-        calculation = self.length * self.width
+        length = simpledialog.askfloat("Input", "Pass the length: ")
+        if length is None:
+            return "Canceled"
+        width = simpledialog.askfloat("Input", "Pass the width: ")
+        if width is None:
+            return "Canceled"
+        calculation = round(length * width, 4)
         return f"The area of your rectangle is: {calculation}" 
 
 
@@ -43,12 +48,17 @@ class StandardTrapezoid:
 
 
 class StandardRhombus:
-    def __init__ (self, diameter1, diameter2):
-        self.diameter1 = diameter1
-        self.diameter2 = diameter2
+    def __init__ (self):
+        pass
 
     def areaStRhom(self):
-        calculation = round(self.diameter1 * self.diameter2 / 2, 4)
+        diagonal1 = simpledialog.askfloat("Input", "Pass the first diagonal: ")
+        if diagonal1 is None:
+            return "Canceled"
+        diagonal2 = simpledialog.askfloat("Input", "Pass the second diagonal: ")
+        if diagonal2 is None:
+            return "Canceled"
+        calculation = round(diagonal1 * diagonal2 / 2, 4)
         return f"The area of your rhombus is: {calculation}"
 
 
@@ -118,11 +128,14 @@ class EquilateralInscribedCircleTriangle:
 #Circle formulas
 #pi = 3.14159
 class StandardCircle:
-    def __init__ (self, radius):
-        self.radius = radius
+    def __init__ (self):
+        pass
 
     def areaStCirc(self):
-        calculation = round(3.14159 * self.radius, 4)
+        radius = simpledialog.askfloat("Input", "Pass the radius: ")
+        if radius is None:
+            return "Canceled"
+        calculation = round(3.14159 * radius, 4)
         return f"The area of your circle is: {calculation}"
 
 
