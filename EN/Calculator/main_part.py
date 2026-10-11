@@ -22,7 +22,7 @@ window.iconbitmap(icon_path)
 #Here are results
 
 lbl_wynik = tk.Label(window, text="Choose your figure", font=("Arial", 12))
-lbl_wynik.pack(pady=10)
+lbl_wynik.grid(row=3, column=3, padx=5, pady=1)
 
 
 #Classic formula for the area of triangle
@@ -33,7 +33,7 @@ resized_image_areaStTriang = pil_image.resize((150, 50), Image.Resampling.LANCZO
 icon = ImageTk.PhotoImage(resized_image_areaStTriang)
 
 btn = tk.Button(window, image=icon, command=lambda: count_areaStTriang())
-btn.pack(pady=1)
+btn.grid(row=1, column=1, padx=5, pady=1)
 
 def count_areaStTriang():
     triangle = figure_classes_area.StandardTriangle()
@@ -54,7 +54,7 @@ resized_image_areaStRec = pil_image_areaStRec.resize((150, 50), Image.Resampling
 icon_areaStRec = ImageTk.PhotoImage(resized_image_areaStRec)
 
 btn_areaStRec = tk.Button(window, image=icon_areaStRec, command=lambda: count_areaStRec())
-btn_areaStRec.pack(pady=1)
+btn_areaStRec.grid(row=1, column=2, padx=5, pady=1)
 
 def count_areaStRec():
     triangle = figure_classes_area.StandardRectangle()
@@ -75,7 +75,7 @@ resized_image_areaStCirc = pil_image_areaStCirc.resize((150, 50), Image.Resampli
 icon_areaStCirc = ImageTk.PhotoImage(resized_image_areaStCirc)
 
 btn_areaStCirc = tk.Button(window, image=icon_areaStCirc, command=lambda: count_areaStCirc())
-btn_areaStCirc.pack(pady=1)
+btn_areaStCirc.grid(row=1, column=3, padx=5, pady=1)
 
 def count_areaStCirc():
     circle = figure_classes_area.StandardCircle()
@@ -96,7 +96,7 @@ resized_image_areaStRhom = pil_image_areaStRhom.resize((150, 50), Image.Resampli
 icon_areaStRhom = ImageTk.PhotoImage(resized_image_areaStRhom)
 
 btn_areaStRhom = tk.Button(window, image=icon_areaStRhom, command=lambda: count_areaStRhom())
-btn_areaStRhom.pack(pady=1)
+btn_areaStRhom.grid(row=1, column=4, padx=5, pady=1)
 
 def count_areaStRhom():
     circle = figure_classes_area.StandardRhombus()
@@ -109,6 +109,26 @@ def count_areaStRhom():
 
 #-----------------------------------------
 
+#Classic formula for the area of trapezoid
+
+image_path_areaStTrap = os.path.join(current_dir, "Images/StandardTrapezoid.jpg")
+pil_image_areaStTrap = Image.open(image_path_areaStTrap)
+resized_image_areaStTrap = pil_image_areaStTrap.resize((150, 50), Image.Resampling.LANCZOS)
+icon_areaStTrap = ImageTk.PhotoImage(resized_image_areaStTrap)
+
+btn_areaStTrap = tk.Button(window, image=icon_areaStTrap, command=lambda: count_areaStTrap())
+btn_areaStTrap.grid(row=1, column=5, padx=5, pady=1)
+
+def count_areaStTrap():
+    circle = figure_classes_area.StandardTrapezoid()
+    result = circle.areaStTrap()
+    
+    if result != "Canceled":
+        lbl_wynik.config(text=result)
+    else:
+        lbl_wynik.config(text="Canceled")
+
+#-----------------------------------------
 
 window.config(background="#FFFFFF")
 
@@ -116,6 +136,5 @@ window.config(background="#FFFFFF")
 frame = Frame(window, bg='#ffffff')
 
 
-standard_triangle_button = Button(frame)
-frame.pack(expand=YES)
+frame.grid(row=0, column=0, padx=10, pady=10, sticky="nsew")
 window.mainloop()

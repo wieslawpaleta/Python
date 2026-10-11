@@ -37,13 +37,20 @@ class DiagonalSquare:
 
 
 class StandardTrapezoid:
-    def __init__ (self, bottomBase, topBase, height):
-        self.bottomBase = bottomBase
-        self.topBase = topBase
-        self.height = height
+    def __init__ (self):
+        pass
 
     def areaStTrap(self):
-        calculation = round((self.bottomBase + self.topBase / 2) * self.height, 4)
+        bottomBase = simpledialog.askfloat("Input", "Pass the bottom base: ")
+        if bottomBase is None:
+            return "Canceled"
+        topBase = simpledialog.askfloat("Input", "Pastt the top base: ")
+        if topBase is None:
+            return "Canceled"
+        height = simpledialog.askfloat("Input", "Pass the height; ")
+        if height is None:
+            return "Canceled"
+        calculation = round((bottomBase + topBase) / 2 * height, 4)
         return f"The area of your trapezoid is: {calculation}"
 
 
