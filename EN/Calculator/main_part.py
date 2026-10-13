@@ -57,8 +57,8 @@ btn_areaStRec = tk.Button(window, image=icon_areaStRec, command=lambda: count_ar
 btn_areaStRec.grid(row=1, column=2, padx=5, pady=1)
 
 def count_areaStRec():
-    triangle = figure_classes_area.StandardRectangle()
-    result = triangle.areaStRec()
+    rectangle = figure_classes_area.StandardRectangle()
+    result = rectangle.areaStRec()
     
     if result != "Canceled":
         lbl_wynik.config(text=result)
@@ -99,8 +99,8 @@ btn_areaStRhom = tk.Button(window, image=icon_areaStRhom, command=lambda: count_
 btn_areaStRhom.grid(row=1, column=4, padx=5, pady=1)
 
 def count_areaStRhom():
-    circle = figure_classes_area.StandardRhombus()
-    result = circle.areaStRhom()
+    rhombus = figure_classes_area.StandardRhombus()
+    result = rhombus.areaStRhom()
     
     if result != "Canceled":
         lbl_wynik.config(text=result)
@@ -120,8 +120,8 @@ btn_areaStTrap = tk.Button(window, image=icon_areaStTrap, command=lambda: count_
 btn_areaStTrap.grid(row=1, column=5, padx=5, pady=1)
 
 def count_areaStTrap():
-    circle = figure_classes_area.StandardTrapezoid()
-    result = circle.areaStTrap()
+    trapezoid = figure_classes_area.StandardTrapezoid()
+    result = trapezoid.areaStTrap()
     
     if result != "Canceled":
         lbl_wynik.config(text=result)
@@ -130,6 +130,110 @@ def count_areaStTrap():
 
 #-----------------------------------------
 
+#Classic formula for the volume of cuboid
+
+image_path_volumeStCubo = os.path.join(current_dir, "Images/StandardCuboid.jpg")
+pil_image_volumeStCubo = Image.open(image_path_volumeStCubo)
+resized_image_volumeStCubo = pil_image_volumeStCubo.resize((150, 50), Image.Resampling.LANCZOS)
+icon_volumeStCubo = ImageTk.PhotoImage(resized_image_volumeStCubo)
+
+btn_volumeStCubo = tk.Button(window, image=icon_volumeStCubo, command=lambda: count_volumeStCubo())
+btn_volumeStCubo.grid(row=5, column=1, padx=5, pady=1)
+
+def count_volumeStCubo():
+    cuboid = figure_classes_volume.StandardCuboid()
+    result = cuboid.volumeStCubo()
+    
+    if result != "Canceled":
+        lbl_wynik.config(text=result)
+    else:
+        lbl_wynik.config(text="Canceled")
+
+#-----------------------------------------
+
+#Classic formula for the volume of cuboid
+
+image_path_volumeStCube = os.path.join(current_dir, "Images/StandardCube.jpeg")
+pil_image_volumeStCube = Image.open(image_path_volumeStCube)
+resized_image_volumeStCube = pil_image_volumeStCube.resize((150, 50), Image.Resampling.LANCZOS)
+icon_volumeStCube = ImageTk.PhotoImage(resized_image_volumeStCube)
+
+btn_volumeStCube = tk.Button(window, image=icon_volumeStCube, command=lambda: count_volumeStCube())
+btn_volumeStCube.grid(row=5, column=2, padx=5, pady=1)
+
+def count_volumeStCube():
+    cube = figure_classes_volume.StandardCube()
+    result = cube.volumeStCube()
+    
+    if result != "Canceled":
+        lbl_wynik.config(text=result)
+    else:
+        lbl_wynik.config(text="Canceled")
+
+#-----------------------------------------
+
+#Classic formula for the volume of sphere
+
+image_path_volumeStSphere = os.path.join(current_dir, "Images/StandardSphere.jpeg")
+pil_image_volumeStSphere = Image.open(image_path_volumeStSphere)
+resized_image_volumeStSphere = pil_image_volumeStSphere.resize((150, 50), Image.Resampling.LANCZOS)
+icon_volumeStSphere = ImageTk.PhotoImage(resized_image_volumeStSphere)
+
+btn_volumeStSphere = tk.Button(window, image=icon_volumeStSphere, command=lambda: count_volumeStSphere())
+btn_volumeStSphere.grid(row=5, column=3, padx=5, pady=1)
+
+def count_volumeStSphere():
+    cube = figure_classes_volume.StandardSphere()
+    result = cube.volumeStSphere()
+    
+    if result != "Canceled":
+        lbl_wynik.config(text=result)
+    else:
+        lbl_wynik.config(text="Canceled")
+
+#-----------------------------------------
+
+#Classic formula for the volume of sphere
+
+image_path_volumeStCylinder = os.path.join(current_dir, "Images/StandardCylinder.jpeg")
+pil_image_volumeStCylinder = Image.open(image_path_volumeStCylinder)
+resized_image_volumeStCylinder = pil_image_volumeStCylinder.resize((150, 50), Image.Resampling.LANCZOS)
+icon_volumeStCylinder = ImageTk.PhotoImage(resized_image_volumeStCylinder)
+
+btn_volumeStCylinder = tk.Button(window, image=icon_volumeStCylinder, command=lambda: count_volumeStCylinder())
+btn_volumeStCylinder.grid(row=5, column=4, padx=5, pady=1)
+
+def count_volumeStCylinder():
+    cube = figure_classes_volume.StandardCylinder()
+    result = cube.volumeStCylinder()
+    
+    if result != "Canceled":
+        lbl_wynik.config(text=result)
+    else:
+        lbl_wynik.config(text="Canceled")
+
+#-----------------------------------------
+
+#Classic formula for the volume of cone
+
+image_path_volumeStCone = os.path.join(current_dir, "Images/StandardCone.jpeg")
+pil_image_volumeStCone = Image.open(image_path_volumeStCone)
+resized_image_volumeStCone = pil_image_volumeStCone.resize((150, 50), Image.Resampling.LANCZOS)
+icon_volumeStCone = ImageTk.PhotoImage(resized_image_volumeStCone)
+
+btn_volumeStCone = tk.Button(window, image=icon_volumeStCone, command=lambda: count_volumeStCone())
+btn_volumeStCone.grid(row=5, column=5, padx=5, pady=1)
+
+def count_volumeStCone():
+    cone = figure_classes_volume.StandardCone()
+    result = cone.volumeStCone()
+
+    if result != "Canceled":
+        lbl_wynik.config(text=result)
+    else:
+        lbl_wynik.config(text="Canceled")
+
+#-----------------------------------------
 window.config(background="#FFFFFF")
 
 
