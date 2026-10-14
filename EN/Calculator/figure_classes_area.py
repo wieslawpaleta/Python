@@ -4,14 +4,14 @@ from tkinter import simpledialog
 
 #Rectangle, Square, Trapezoid, Rhombus, Hexagon formulas
 class StandardRectangle:
-    def __init__(self):
-        pass
+    def __init__(self, window):
+        self.window = window
 
     def areaStRec(self):
-        length = simpledialog.askfloat("Input", "Pass the length: ")
+        length = simpledialog.askfloat("Input", "Pass the length: ", parent=self.window)
         if length is None:
             return "Canceled"
-        width = simpledialog.askfloat("Input", "Pass the width: ")
+        width = simpledialog.askfloat("Input", "Pass the width: ", parent=self.window)
         if width is None:
             return "Canceled"
         calculation = round(length * width, 4)

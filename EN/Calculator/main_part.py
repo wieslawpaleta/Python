@@ -9,31 +9,31 @@ from PIL import Image, ImageTk
 window = Tk()
 
 window.title("My Calculator")
-window.geometry("720x480")
-window.minsize(480, 360)
+window.geometry("1200x800")
+window.minsize(640, 480)
 
 
 current_dir = os.path.dirname(__file__)
 icon_path = os.path.join(current_dir, "favicon.ico")
 window.iconbitmap(icon_path)
-
+frame = Frame(window, bg='#ffffff')
 
 #Buttons with images in order to 
 #Here are results
 
-lbl_wynik = tk.Label(window, text="Choose your figure", font=("Arial", 12))
-lbl_wynik.grid(row=3, column=3, padx=5, pady=1)
+lbl_wynik = tk.Label(frame, text="Choose your figure", font=("Arial", 12), width=30, height=15, bg="lightgray")
+lbl_wynik.grid(row=3, column=3, padx=5, pady=1, sticky="nsew")
 
 
 #Classic formula for the area of triangle
 
 image_path = os.path.join(current_dir, "Images/StandardTriangle.jpg")
 pil_image = Image.open(image_path)
-resized_image_areaStTriang = pil_image.resize((150, 50), Image.Resampling.LANCZOS)
+resized_image_areaStTriang = pil_image.resize((300, 100), Image.Resampling.LANCZOS)
 icon = ImageTk.PhotoImage(resized_image_areaStTriang)
 
-btn = tk.Button(window, image=icon, command=lambda: count_areaStTriang())
-btn.grid(row=1, column=1, padx=5, pady=1)
+btn = tk.Button(frame, image=icon, command=lambda: count_areaStTriang())
+btn.grid(row=1, column=1, padx=5, pady=1, sticky="nsew")
 
 def count_areaStTriang():
     triangle = figure_classes_area.StandardTriangle()
@@ -50,14 +50,14 @@ def count_areaStTriang():
 
 image_path_areaStRec = os.path.join(current_dir, "Images/StandardRectangle.jpg")
 pil_image_areaStRec = Image.open(image_path_areaStRec)
-resized_image_areaStRec = pil_image_areaStRec.resize((150, 50), Image.Resampling.LANCZOS)
+resized_image_areaStRec = pil_image_areaStRec.resize((300, 100), Image.Resampling.LANCZOS)
 icon_areaStRec = ImageTk.PhotoImage(resized_image_areaStRec)
 
-btn_areaStRec = tk.Button(window, image=icon_areaStRec, command=lambda: count_areaStRec())
-btn_areaStRec.grid(row=1, column=2, padx=5, pady=1)
+btn_areaStRec = tk.Button(frame, image=icon_areaStRec, command=lambda: count_areaStRec())
+btn_areaStRec.grid(row=1, column=2, padx=5, pady=1, sticky="nsew")
 
 def count_areaStRec():
-    rectangle = figure_classes_area.StandardRectangle()
+    rectangle = figure_classes_area.StandardRectangle(window)
     result = rectangle.areaStRec()
     
     if result != "Canceled":
@@ -71,11 +71,11 @@ def count_areaStRec():
 
 image_path_areaStCirc = os.path.join(current_dir, "Images/StandardCircle.jpg")
 pil_image_areaStCirc = Image.open(image_path_areaStCirc)
-resized_image_areaStCirc = pil_image_areaStCirc.resize((150, 50), Image.Resampling.LANCZOS)
+resized_image_areaStCirc = pil_image_areaStCirc.resize((300, 100), Image.Resampling.LANCZOS)
 icon_areaStCirc = ImageTk.PhotoImage(resized_image_areaStCirc)
 
-btn_areaStCirc = tk.Button(window, image=icon_areaStCirc, command=lambda: count_areaStCirc())
-btn_areaStCirc.grid(row=1, column=3, padx=5, pady=1)
+btn_areaStCirc = tk.Button(frame, image=icon_areaStCirc, command=lambda: count_areaStCirc())
+btn_areaStCirc.grid(row=1, column=3, padx=5, pady=1, sticky="nsew")
 
 def count_areaStCirc():
     circle = figure_classes_area.StandardCircle()
@@ -92,11 +92,11 @@ def count_areaStCirc():
 
 image_path_areaStRhom = os.path.join(current_dir, "Images/StandardRhombus.jpg")
 pil_image_areaStRhom = Image.open(image_path_areaStRhom)
-resized_image_areaStRhom = pil_image_areaStRhom.resize((150, 50), Image.Resampling.LANCZOS)
+resized_image_areaStRhom = pil_image_areaStRhom.resize((300, 100), Image.Resampling.LANCZOS)
 icon_areaStRhom = ImageTk.PhotoImage(resized_image_areaStRhom)
 
-btn_areaStRhom = tk.Button(window, image=icon_areaStRhom, command=lambda: count_areaStRhom())
-btn_areaStRhom.grid(row=1, column=4, padx=5, pady=1)
+btn_areaStRhom = tk.Button(frame, image=icon_areaStRhom, command=lambda: count_areaStRhom())
+btn_areaStRhom.grid(row=1, column=4, padx=5, pady=1, sticky="nsew")
 
 def count_areaStRhom():
     rhombus = figure_classes_area.StandardRhombus()
@@ -113,11 +113,11 @@ def count_areaStRhom():
 
 image_path_areaStTrap = os.path.join(current_dir, "Images/StandardTrapezoid.jpg")
 pil_image_areaStTrap = Image.open(image_path_areaStTrap)
-resized_image_areaStTrap = pil_image_areaStTrap.resize((150, 50), Image.Resampling.LANCZOS)
+resized_image_areaStTrap = pil_image_areaStTrap.resize((300, 100), Image.Resampling.LANCZOS)
 icon_areaStTrap = ImageTk.PhotoImage(resized_image_areaStTrap)
 
-btn_areaStTrap = tk.Button(window, image=icon_areaStTrap, command=lambda: count_areaStTrap())
-btn_areaStTrap.grid(row=1, column=5, padx=5, pady=1)
+btn_areaStTrap = tk.Button(frame, image=icon_areaStTrap, command=lambda: count_areaStTrap())
+btn_areaStTrap.grid(row=1, column=5, padx=5, pady=1, sticky="nsew")
 
 def count_areaStTrap():
     trapezoid = figure_classes_area.StandardTrapezoid()
@@ -134,11 +134,11 @@ def count_areaStTrap():
 
 image_path_volumeStCubo = os.path.join(current_dir, "Images/StandardCuboid.jpg")
 pil_image_volumeStCubo = Image.open(image_path_volumeStCubo)
-resized_image_volumeStCubo = pil_image_volumeStCubo.resize((150, 50), Image.Resampling.LANCZOS)
+resized_image_volumeStCubo = pil_image_volumeStCubo.resize((300, 100), Image.Resampling.LANCZOS)
 icon_volumeStCubo = ImageTk.PhotoImage(resized_image_volumeStCubo)
 
-btn_volumeStCubo = tk.Button(window, image=icon_volumeStCubo, command=lambda: count_volumeStCubo())
-btn_volumeStCubo.grid(row=5, column=1, padx=5, pady=1)
+btn_volumeStCubo = tk.Button(frame, image=icon_volumeStCubo, command=lambda: count_volumeStCubo())
+btn_volumeStCubo.grid(row=5, column=1, padx=5, pady=1, sticky="nsew")
 
 def count_volumeStCubo():
     cuboid = figure_classes_volume.StandardCuboid()
@@ -155,11 +155,11 @@ def count_volumeStCubo():
 
 image_path_volumeStCube = os.path.join(current_dir, "Images/StandardCube.jpeg")
 pil_image_volumeStCube = Image.open(image_path_volumeStCube)
-resized_image_volumeStCube = pil_image_volumeStCube.resize((150, 50), Image.Resampling.LANCZOS)
+resized_image_volumeStCube = pil_image_volumeStCube.resize((300, 100), Image.Resampling.LANCZOS)
 icon_volumeStCube = ImageTk.PhotoImage(resized_image_volumeStCube)
 
-btn_volumeStCube = tk.Button(window, image=icon_volumeStCube, command=lambda: count_volumeStCube())
-btn_volumeStCube.grid(row=5, column=2, padx=5, pady=1)
+btn_volumeStCube = tk.Button(frame, image=icon_volumeStCube, command=lambda: count_volumeStCube())
+btn_volumeStCube.grid(row=5, column=2, padx=5, pady=1, sticky="nsew")
 
 def count_volumeStCube():
     cube = figure_classes_volume.StandardCube()
@@ -176,11 +176,11 @@ def count_volumeStCube():
 
 image_path_volumeStSphere = os.path.join(current_dir, "Images/StandardSphere.jpeg")
 pil_image_volumeStSphere = Image.open(image_path_volumeStSphere)
-resized_image_volumeStSphere = pil_image_volumeStSphere.resize((150, 50), Image.Resampling.LANCZOS)
+resized_image_volumeStSphere = pil_image_volumeStSphere.resize((300, 100), Image.Resampling.LANCZOS)
 icon_volumeStSphere = ImageTk.PhotoImage(resized_image_volumeStSphere)
 
-btn_volumeStSphere = tk.Button(window, image=icon_volumeStSphere, command=lambda: count_volumeStSphere())
-btn_volumeStSphere.grid(row=5, column=3, padx=5, pady=1)
+btn_volumeStSphere = tk.Button(frame, image=icon_volumeStSphere, command=lambda: count_volumeStSphere())
+btn_volumeStSphere.grid(row=5, column=3, padx=5, pady=1, sticky="nsew")
 
 def count_volumeStSphere():
     cube = figure_classes_volume.StandardSphere()
@@ -197,11 +197,11 @@ def count_volumeStSphere():
 
 image_path_volumeStCylinder = os.path.join(current_dir, "Images/StandardCylinder.jpeg")
 pil_image_volumeStCylinder = Image.open(image_path_volumeStCylinder)
-resized_image_volumeStCylinder = pil_image_volumeStCylinder.resize((150, 50), Image.Resampling.LANCZOS)
+resized_image_volumeStCylinder = pil_image_volumeStCylinder.resize((300, 100), Image.Resampling.LANCZOS)
 icon_volumeStCylinder = ImageTk.PhotoImage(resized_image_volumeStCylinder)
 
-btn_volumeStCylinder = tk.Button(window, image=icon_volumeStCylinder, command=lambda: count_volumeStCylinder())
-btn_volumeStCylinder.grid(row=5, column=4, padx=5, pady=1)
+btn_volumeStCylinder = tk.Button(frame, image=icon_volumeStCylinder, command=lambda: count_volumeStCylinder())
+btn_volumeStCylinder.grid(row=5, column=4, padx=5, pady=1, sticky="nsew")
 
 def count_volumeStCylinder():
     cube = figure_classes_volume.StandardCylinder()
@@ -218,11 +218,11 @@ def count_volumeStCylinder():
 
 image_path_volumeStCone = os.path.join(current_dir, "Images/StandardCone.jpeg")
 pil_image_volumeStCone = Image.open(image_path_volumeStCone)
-resized_image_volumeStCone = pil_image_volumeStCone.resize((150, 50), Image.Resampling.LANCZOS)
+resized_image_volumeStCone = pil_image_volumeStCone.resize((300, 100), Image.Resampling.LANCZOS)
 icon_volumeStCone = ImageTk.PhotoImage(resized_image_volumeStCone)
 
-btn_volumeStCone = tk.Button(window, image=icon_volumeStCone, command=lambda: count_volumeStCone())
-btn_volumeStCone.grid(row=5, column=5, padx=5, pady=1)
+btn_volumeStCone = tk.Button(frame, image=icon_volumeStCone, command=lambda: count_volumeStCone())
+btn_volumeStCone.grid(row=5, column=5, padx=5, pady=1, sticky="nsew")
 
 def count_volumeStCone():
     cone = figure_classes_volume.StandardCone()
@@ -236,9 +236,47 @@ def count_volumeStCone():
 #-----------------------------------------
 window.config(background="#FFFFFF")
 
+photo_refs = {}
 
-frame = Frame(window, bg='#ffffff')
+def resize_images(event):
+    if event.widget != window:
+        return
 
+    new_w = max(100, int(event.width / 5.5))
+    new_h = max(40, int(event.height / 8))
 
-frame.grid(row=0, column=0, padx=10, pady=10, sticky="nsew")
+    all_elements = [
+        (pil_image, btn),
+        (pil_image_areaStRec, btn_areaStRec),
+        (pil_image_areaStCirc, btn_areaStCirc),
+        (pil_image_areaStRhom, btn_areaStRhom),
+        (pil_image_areaStTrap, btn_areaStTrap),
+        (pil_image_volumeStCubo, btn_volumeStCubo),
+        (pil_image_volumeStCube, btn_volumeStCube),
+        (pil_image_volumeStSphere, btn_volumeStSphere),
+        (pil_image_volumeStCylinder, btn_volumeStCylinder),
+        (pil_image_volumeStCone, btn_volumeStCone)
+    ]
+
+    for idx, (img, button) in enumerate(all_elements):
+        resized = img.resize((new_w, new_h), Image.Resampling.LANCZOS)
+        new_icon = ImageTk.PhotoImage(resized)
+        button.config(image=new_icon)
+        photo_refs[idx] = new_icon
+
+window.bind("<Configure>", resize_images)
+
+for col in range(1, 6):
+    frame.grid_columnconfigure(col, weight=1)
+
+frame.grid_rowconfigure(1, weight=1)
+frame.grid_rowconfigure(3, weight=1)
+frame.grid_rowconfigure(5, weight=1)
+
+window.grid_columnconfigure(0, weight=1)
+window.grid_rowconfigure(0, weight=1)
+
+frame.grid(row=0, column=0)
+
 window.mainloop()
+
