@@ -37,17 +37,17 @@ class DiagonalSquare:
 
 
 class StandardTrapezoid:
-    def __init__ (self):
-        pass
+    def __init__ (self, window):
+        self.window = window
 
     def areaStTrap(self):
-        bottomBase = simpledialog.askfloat("Input", "Pass the bottom base: ")
+        bottomBase = simpledialog.askfloat("Input", "Pass the bottom base: ", parent=self.window)
         if bottomBase is None:
             return "Canceled"
-        topBase = simpledialog.askfloat("Input", "Pastt the top base: ")
+        topBase = simpledialog.askfloat("Input", "Pastt the top base: ", parent=self.window)
         if topBase is None:
             return "Canceled"
-        height = simpledialog.askfloat("Input", "Pass the height; ")
+        height = simpledialog.askfloat("Input", "Pass the height; ", parent=self.window)
         if height is None:
             return "Canceled"
         calculation = round((bottomBase + topBase) / 2 * height, 4)
@@ -55,14 +55,14 @@ class StandardTrapezoid:
 
 
 class StandardRhombus:
-    def __init__ (self):
-        pass
+    def __init__ (self, window):
+        self.window = window
 
     def areaStRhom(self):
-        diagonal1 = simpledialog.askfloat("Input", "Pass the first diagonal: ")
+        diagonal1 = simpledialog.askfloat("Input", "Pass the first diagonal: ", parent=self.window)
         if diagonal1 is None:
             return "Canceled"
-        diagonal2 = simpledialog.askfloat("Input", "Pass the second diagonal: ")
+        diagonal2 = simpledialog.askfloat("Input", "Pass the second diagonal: ", parent=self.window)
         if diagonal2 is None:
             return "Canceled"
         calculation = round(diagonal1 * diagonal2 / 2, 4)
@@ -80,14 +80,14 @@ class StandardRegularHexagon:
 
 #Triangle formulas
 class StandardTriangle:
-    def __init__(self):
-        pass
+    def __init__ (self, window):
+        self.window = window
 
     def areaStTriang(self):
-        base = simpledialog.askfloat("Input", "Pass the base: ")
+        base = simpledialog.askfloat("Input", "Pass the base: ", parent=self.window)
         if base is None: 
             return "Canceled"
-        height = simpledialog.askfloat("Input", "Pass the height:")
+        height = simpledialog.askfloat("Input", "Pass the height:", parent=self.window)
         if height is None: 
             return "Canceled"
         calculation = round(base * height / 2, 4)
@@ -135,11 +135,11 @@ class EquilateralInscribedCircleTriangle:
 #Circle formulas
 #pi = 3.14159
 class StandardCircle:
-    def __init__ (self):
-        pass
+    def __init__ (self, window):
+        self.window = window
 
     def areaStCirc(self):
-        radius = simpledialog.askfloat("Input", "Pass the radius: ")
+        radius = simpledialog.askfloat("Input", "Pass the radius: ", parent=self.window)
         if radius is None:
             return "Canceled"
         calculation = round(3.14159 * radius, 4)

@@ -5,6 +5,7 @@ import figure_classes_volume
 from tkinter import *
 import tkinter as tk
 from PIL import Image, ImageTk
+import webbrowser
 
 window = Tk()
 
@@ -36,7 +37,7 @@ btn = tk.Button(frame, image=icon, command=lambda: count_areaStTriang())
 btn.grid(row=1, column=1, padx=5, pady=1, sticky="nsew")
 
 def count_areaStTriang():
-    triangle = figure_classes_area.StandardTriangle()
+    triangle = figure_classes_area.StandardTriangle(window)
     result = triangle.areaStTriang()
     
     if result != "Canceled":
@@ -78,7 +79,7 @@ btn_areaStCirc = tk.Button(frame, image=icon_areaStCirc, command=lambda: count_a
 btn_areaStCirc.grid(row=1, column=3, padx=5, pady=1, sticky="nsew")
 
 def count_areaStCirc():
-    circle = figure_classes_area.StandardCircle()
+    circle = figure_classes_area.StandardCircle(window)
     result = circle.areaStCirc()
     
     if result != "Canceled":
@@ -99,7 +100,7 @@ btn_areaStRhom = tk.Button(frame, image=icon_areaStRhom, command=lambda: count_a
 btn_areaStRhom.grid(row=1, column=4, padx=5, pady=1, sticky="nsew")
 
 def count_areaStRhom():
-    rhombus = figure_classes_area.StandardRhombus()
+    rhombus = figure_classes_area.StandardRhombus(window)
     result = rhombus.areaStRhom()
     
     if result != "Canceled":
@@ -120,7 +121,7 @@ btn_areaStTrap = tk.Button(frame, image=icon_areaStTrap, command=lambda: count_a
 btn_areaStTrap.grid(row=1, column=5, padx=5, pady=1, sticky="nsew")
 
 def count_areaStTrap():
-    trapezoid = figure_classes_area.StandardTrapezoid()
+    trapezoid = figure_classes_area.StandardTrapezoid(window)
     result = trapezoid.areaStTrap()
     
     if result != "Canceled":
@@ -141,7 +142,7 @@ btn_volumeStCubo = tk.Button(frame, image=icon_volumeStCubo, command=lambda: cou
 btn_volumeStCubo.grid(row=5, column=1, padx=5, pady=1, sticky="nsew")
 
 def count_volumeStCubo():
-    cuboid = figure_classes_volume.StandardCuboid()
+    cuboid = figure_classes_volume.StandardCuboid(window)
     result = cuboid.volumeStCubo()
     
     if result != "Canceled":
@@ -151,9 +152,9 @@ def count_volumeStCubo():
 
 #-----------------------------------------
 
-#Classic formula for the volume of cuboid
+#Classic formula for the volume of cube
 
-image_path_volumeStCube = os.path.join(current_dir, "Images/StandardCube.jpeg")
+image_path_volumeStCube = os.path.join(current_dir, "Images/StandardCube.jpg")
 pil_image_volumeStCube = Image.open(image_path_volumeStCube)
 resized_image_volumeStCube = pil_image_volumeStCube.resize((300, 100), Image.Resampling.LANCZOS)
 icon_volumeStCube = ImageTk.PhotoImage(resized_image_volumeStCube)
@@ -162,7 +163,7 @@ btn_volumeStCube = tk.Button(frame, image=icon_volumeStCube, command=lambda: cou
 btn_volumeStCube.grid(row=5, column=2, padx=5, pady=1, sticky="nsew")
 
 def count_volumeStCube():
-    cube = figure_classes_volume.StandardCube()
+    cube = figure_classes_volume.StandardCube(window)
     result = cube.volumeStCube()
     
     if result != "Canceled":
@@ -183,7 +184,7 @@ btn_volumeStSphere = tk.Button(frame, image=icon_volumeStSphere, command=lambda:
 btn_volumeStSphere.grid(row=5, column=3, padx=5, pady=1, sticky="nsew")
 
 def count_volumeStSphere():
-    cube = figure_classes_volume.StandardSphere()
+    cube = figure_classes_volume.StandardSphere(window)
     result = cube.volumeStSphere()
     
     if result != "Canceled":
@@ -204,7 +205,7 @@ btn_volumeStCylinder = tk.Button(frame, image=icon_volumeStCylinder, command=lam
 btn_volumeStCylinder.grid(row=5, column=4, padx=5, pady=1, sticky="nsew")
 
 def count_volumeStCylinder():
-    cube = figure_classes_volume.StandardCylinder()
+    cube = figure_classes_volume.StandardCylinder(window)
     result = cube.volumeStCylinder()
     
     if result != "Canceled":
@@ -225,13 +226,22 @@ btn_volumeStCone = tk.Button(frame, image=icon_volumeStCone, command=lambda: cou
 btn_volumeStCone.grid(row=5, column=5, padx=5, pady=1, sticky="nsew")
 
 def count_volumeStCone():
-    cone = figure_classes_volume.StandardCone()
+    cone = figure_classes_volume.StandardCone(window)
     result = cone.volumeStCone()
 
     if result != "Canceled":
         lbl_wynik.config(text=result)
     else:
         lbl_wynik.config(text="Canceled")
+
+#-----------------------------------------
+
+#GitHub Button
+def open_my_github():
+    webbrowser.open_new("https://github.com/wieslawpaleta")
+
+gt_button = Button(frame, text="My GitHub Profile", font=("Courrier", 25), bg='white', fg="#000000", command=open_my_github)
+gt_button.grid(row=6, column=3, padx=5, pady=1, sticky="nsew")
 
 #-----------------------------------------
 window.config(background="#FFFFFF")
