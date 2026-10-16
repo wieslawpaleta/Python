@@ -17,14 +17,37 @@ window.minsize(640, 480)
 current_dir = os.path.dirname(__file__)
 icon_path = os.path.join(current_dir, "favicon.ico")
 window.iconbitmap(icon_path)
-frame = Frame(window, bg='#ffffff')
+frame = Frame(window, bg="#E6E5E5")
+window_welcome = Label(frame, text="CALCULATOR FOR AREAS AND VOLUMES", font=("Courrier", 40), bg="#2E5C46", fg='white')
+window_welcome.grid(row=0, column=1, columnspan=5, padx=5, pady=1, sticky="nsew")
 
-#Buttons with images in order to 
+#Buttons with images in order to calculate area/volume.
 #Here are results
 
 lbl_wynik = tk.Label(frame, text="Choose your figure", font=("Arial", 12), width=30, height=15, bg="lightgray")
 lbl_wynik.grid(row=3, column=3, padx=5, pady=1, sticky="nsew")
 
+
+#Classic formula for the area of square
+
+image_path_areaPowSquare = os.path.join(current_dir, "Images/PowerSquare.jpg")
+pil_image_areaPowSquare = Image.open(image_path_areaPowSquare)
+resized_image_areaPowSquare = pil_image_areaPowSquare.resize((300, 100), Image.Resampling.LANCZOS)
+icon_areaPowSquare = ImageTk.PhotoImage(resized_image_areaPowSquare)
+
+btn_areaPowSquare = tk.Button(frame, image=icon_areaPowSquare, command=lambda: count_areaPowSquare())
+btn_areaPowSquare.grid(row=1, column=3, padx=5, pady=1, sticky="nsew")
+
+def count_areaPowSquare():
+    triangle = figure_classes_area.PowerSquare(window)
+    result = triangle.areaPowSquare()
+    
+    if result != "Canceled":
+        lbl_wynik.config(text=result)
+    else:
+        lbl_wynik.config(text="Canceled")
+
+#-----------------------------------------
 
 #Classic formula for the area of triangle
 
@@ -34,7 +57,7 @@ resized_image_areaStTriang = pil_image.resize((300, 100), Image.Resampling.LANCZ
 icon = ImageTk.PhotoImage(resized_image_areaStTriang)
 
 btn = tk.Button(frame, image=icon, command=lambda: count_areaStTriang())
-btn.grid(row=1, column=1, padx=5, pady=1, sticky="nsew")
+btn.grid(row=2, column=1, padx=5, pady=1, sticky="nsew")
 
 def count_areaStTriang():
     triangle = figure_classes_area.StandardTriangle(window)
@@ -55,7 +78,7 @@ resized_image_areaStRec = pil_image_areaStRec.resize((300, 100), Image.Resamplin
 icon_areaStRec = ImageTk.PhotoImage(resized_image_areaStRec)
 
 btn_areaStRec = tk.Button(frame, image=icon_areaStRec, command=lambda: count_areaStRec())
-btn_areaStRec.grid(row=1, column=2, padx=5, pady=1, sticky="nsew")
+btn_areaStRec.grid(row=2, column=2, padx=5, pady=1, sticky="nsew")
 
 def count_areaStRec():
     rectangle = figure_classes_area.StandardRectangle(window)
@@ -76,7 +99,7 @@ resized_image_areaStCirc = pil_image_areaStCirc.resize((300, 100), Image.Resampl
 icon_areaStCirc = ImageTk.PhotoImage(resized_image_areaStCirc)
 
 btn_areaStCirc = tk.Button(frame, image=icon_areaStCirc, command=lambda: count_areaStCirc())
-btn_areaStCirc.grid(row=1, column=3, padx=5, pady=1, sticky="nsew")
+btn_areaStCirc.grid(row=2, column=3, padx=5, pady=1, sticky="nsew")
 
 def count_areaStCirc():
     circle = figure_classes_area.StandardCircle(window)
@@ -97,7 +120,7 @@ resized_image_areaStRhom = pil_image_areaStRhom.resize((300, 100), Image.Resampl
 icon_areaStRhom = ImageTk.PhotoImage(resized_image_areaStRhom)
 
 btn_areaStRhom = tk.Button(frame, image=icon_areaStRhom, command=lambda: count_areaStRhom())
-btn_areaStRhom.grid(row=1, column=4, padx=5, pady=1, sticky="nsew")
+btn_areaStRhom.grid(row=2, column=4, padx=5, pady=1, sticky="nsew")
 
 def count_areaStRhom():
     rhombus = figure_classes_area.StandardRhombus(window)
@@ -118,7 +141,7 @@ resized_image_areaStTrap = pil_image_areaStTrap.resize((300, 100), Image.Resampl
 icon_areaStTrap = ImageTk.PhotoImage(resized_image_areaStTrap)
 
 btn_areaStTrap = tk.Button(frame, image=icon_areaStTrap, command=lambda: count_areaStTrap())
-btn_areaStTrap.grid(row=1, column=5, padx=5, pady=1, sticky="nsew")
+btn_areaStTrap.grid(row=2, column=5, padx=5, pady=1, sticky="nsew")
 
 def count_areaStTrap():
     trapezoid = figure_classes_area.StandardTrapezoid(window)

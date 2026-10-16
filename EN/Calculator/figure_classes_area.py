@@ -19,11 +19,14 @@ class StandardRectangle:
 
 
 class PowerSquare:
-    def __init__(self, length):
-        self.length = length
+    def __init__(self, window):
+        self.window = window
 
-    def areaPowSq(self):
-        calculation = pow(self.length, 2)
+    def areaPowSquare(self):
+        aSide = simpledialog.askfloat("Input", "Pass a:", parent=self.window)
+        if aSide is None:
+            return "Canceled"
+        calculation = round(pow(aSide, 2), 4)
         return f"The area of your square is: {calculation}"
 
 
