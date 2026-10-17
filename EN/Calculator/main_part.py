@@ -13,6 +13,13 @@ window.title("My Calculator")
 window.geometry("1200x800")
 window.minsize(640, 480)
 
+current_dir1 = os.path.dirname(__file__)
+image_path_background = os.path.join(current_dir1, "Images/Background.jpg")
+pil_img_background = Image.open(image_path_background)
+image_background = ImageTk.PhotoImage(pil_img_background)
+bg_label = tk.Label(window, image=image_background)
+bg_label.place(x=0, y=0, relwidth=1, relheight=1)
+
 
 current_dir = os.path.dirname(__file__)
 icon_path = os.path.join(current_dir, "favicon.ico")
@@ -20,6 +27,7 @@ window.iconbitmap(icon_path)
 frame = Frame(window, bg="#E6E5E5")
 window_welcome = Label(frame, text="CALCULATOR FOR AREAS AND VOLUMES", font=("Courrier", 40), bg="#2E5C46", fg='white')
 window_welcome.grid(row=0, column=1, columnspan=5, padx=5, pady=1, sticky="nsew")
+
 
 #Buttons with images in order to calculate area/volume.
 #Here are results
