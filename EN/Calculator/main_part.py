@@ -38,7 +38,7 @@ lbl_wynik.grid(row=3, column=3, padx=5, pady=1, sticky="nsew")
 
 #Classic formula for the area of square
 
-image_path_areaPowSquare = os.path.join(current_dir, "Images/PowerSquare.jpg")
+image_path_areaPowSquare = os.path.join(current_dir, "Images/PowerSquare.png")
 pil_image_areaPowSquare = Image.open(image_path_areaPowSquare)
 resized_image_areaPowSquare = pil_image_areaPowSquare.resize((300, 100), Image.Resampling.LANCZOS)
 icon_areaPowSquare = ImageTk.PhotoImage(resized_image_areaPowSquare)
@@ -59,7 +59,7 @@ def count_areaPowSquare():
 
 #Classic formula for the area of triangle
 
-image_path = os.path.join(current_dir, "Images/StandardTriangle.jpg")
+image_path = os.path.join(current_dir, "Images/StandardTriangle.png")
 pil_image = Image.open(image_path)
 resized_image_areaStTriang = pil_image.resize((300, 100), Image.Resampling.LANCZOS)
 icon = ImageTk.PhotoImage(resized_image_areaStTriang)
@@ -80,7 +80,7 @@ def count_areaStTriang():
 
 #Classic formula for the area of rectangle
 
-image_path_areaStRec = os.path.join(current_dir, "Images/StandardRectangle.jpg")
+image_path_areaStRec = os.path.join(current_dir, "Images/StandardRectangle.png")
 pil_image_areaStRec = Image.open(image_path_areaStRec)
 resized_image_areaStRec = pil_image_areaStRec.resize((300, 100), Image.Resampling.LANCZOS)
 icon_areaStRec = ImageTk.PhotoImage(resized_image_areaStRec)
@@ -101,7 +101,7 @@ def count_areaStRec():
 
 #Classic formula for the area of circle
 
-image_path_areaStCirc = os.path.join(current_dir, "Images/StandardCircle.jpg")
+image_path_areaStCirc = os.path.join(current_dir, "Images/StandardCircle.png")
 pil_image_areaStCirc = Image.open(image_path_areaStCirc)
 resized_image_areaStCirc = pil_image_areaStCirc.resize((300, 100), Image.Resampling.LANCZOS)
 icon_areaStCirc = ImageTk.PhotoImage(resized_image_areaStCirc)
@@ -122,7 +122,7 @@ def count_areaStCirc():
 
 #Classic formula for the area of rhombus
 
-image_path_areaStRhom = os.path.join(current_dir, "Images/StandardRhombus.jpg")
+image_path_areaStRhom = os.path.join(current_dir, "Images/StandardRhombus.png")
 pil_image_areaStRhom = Image.open(image_path_areaStRhom)
 resized_image_areaStRhom = pil_image_areaStRhom.resize((300, 100), Image.Resampling.LANCZOS)
 icon_areaStRhom = ImageTk.PhotoImage(resized_image_areaStRhom)
@@ -143,7 +143,7 @@ def count_areaStRhom():
 
 #Classic formula for the area of trapezoid
 
-image_path_areaStTrap = os.path.join(current_dir, "Images/StandardTrapezoid.jpg")
+image_path_areaStTrap = os.path.join(current_dir, "Images/StandardTrapezoid.png")
 pil_image_areaStTrap = Image.open(image_path_areaStTrap)
 resized_image_areaStTrap = pil_image_areaStTrap.resize((300, 100), Image.Resampling.LANCZOS)
 icon_areaStTrap = ImageTk.PhotoImage(resized_image_areaStTrap)
@@ -164,7 +164,7 @@ def count_areaStTrap():
 
 #Classic formula for the volume of cuboid
 
-image_path_volumeStCubo = os.path.join(current_dir, "Images/StandardCuboid.jpg")
+image_path_volumeStCubo = os.path.join(current_dir, "Images/StandardCuboid.png")
 pil_image_volumeStCubo = Image.open(image_path_volumeStCubo)
 resized_image_volumeStCubo = pil_image_volumeStCubo.resize((300, 100), Image.Resampling.LANCZOS)
 icon_volumeStCubo = ImageTk.PhotoImage(resized_image_volumeStCubo)
@@ -185,7 +185,7 @@ def count_volumeStCubo():
 
 #Classic formula for the volume of cube
 
-image_path_volumeStCube = os.path.join(current_dir, "Images/StandardCube.jpg")
+image_path_volumeStCube = os.path.join(current_dir, "Images/StandardCube.png")
 pil_image_volumeStCube = Image.open(image_path_volumeStCube)
 resized_image_volumeStCube = pil_image_volumeStCube.resize((300, 100), Image.Resampling.LANCZOS)
 icon_volumeStCube = ImageTk.PhotoImage(resized_image_volumeStCube)
@@ -206,7 +206,7 @@ def count_volumeStCube():
 
 #Classic formula for the volume of sphere
 
-image_path_volumeStSphere = os.path.join(current_dir, "Images/StandardSphere.jpeg")
+image_path_volumeStSphere = os.path.join(current_dir, "Images/StandardSphere.png")
 pil_image_volumeStSphere = Image.open(image_path_volumeStSphere)
 resized_image_volumeStSphere = pil_image_volumeStSphere.resize((300, 100), Image.Resampling.LANCZOS)
 icon_volumeStSphere = ImageTk.PhotoImage(resized_image_volumeStSphere)
@@ -225,9 +225,9 @@ def count_volumeStSphere():
 
 #-----------------------------------------
 
-#Classic formula for the volume of sphere
+#Classic formula for the volume of cylinder
 
-image_path_volumeStCylinder = os.path.join(current_dir, "Images/StandardCylinder.jpeg")
+image_path_volumeStCylinder = os.path.join(current_dir, "Images/StandardCylinder.png")
 pil_image_volumeStCylinder = Image.open(image_path_volumeStCylinder)
 resized_image_volumeStCylinder = pil_image_volumeStCylinder.resize((300, 100), Image.Resampling.LANCZOS)
 icon_volumeStCylinder = ImageTk.PhotoImage(resized_image_volumeStCylinder)
@@ -248,7 +248,7 @@ def count_volumeStCylinder():
 
 #Classic formula for the volume of cone
 
-image_path_volumeStCone = os.path.join(current_dir, "Images/StandardCone.jpeg")
+image_path_volumeStCone = os.path.join(current_dir, "Images/StandardCone.png")
 pil_image_volumeStCone = Image.open(image_path_volumeStCone)
 resized_image_volumeStCone = pil_image_volumeStCone.resize((300, 100), Image.Resampling.LANCZOS)
 icon_volumeStCone = ImageTk.PhotoImage(resized_image_volumeStCone)
