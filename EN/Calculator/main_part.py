@@ -4,14 +4,14 @@ import figure_classes_area
 import figure_classes_volume
 from tkinter import *
 import tkinter as tk
-from PIL import Image, ImageTk
+from PIL import Image, ImageTk, ImageOps
 import webbrowser
 
 window = Tk()
 
 window.title("My Calculator")
-window.geometry("1200x800")
-window.minsize(640, 480)
+window.geometry("1280x720")
+window.minsize(1280, 720)
 
 current_dir1 = os.path.dirname(__file__)
 image_path_background = os.path.join(current_dir1, "Images/Background.jpg")
@@ -26,14 +26,14 @@ icon_path = os.path.join(current_dir, "favicon.ico")
 window.iconbitmap(icon_path)
 frame = Frame(window, bg="#E6E5E5")
 window_welcome = Label(window, text="CALCULATOR FOR AREAS AND VOLUMES", font=("Courrier", 40), bg="#2E5C46", fg='white')
-window_welcome.grid(row=0, column=1, columnspan=5, padx=5, pady=1, sticky="nsew")
+window_welcome.grid(row=0, column=1, columnspan=5, padx=5, pady=10, sticky="nsew")
 
 
 #Buttons with images in order to calculate area/volume.
 #Here are results
 
-lbl_wynik = tk.Label(window, text="Choose your figure", font=("Arial", 12), width=30, height=15, bg="lightgray")
-lbl_wynik.grid(row=3, column=3, padx=5, pady=1, sticky="nsew")
+lbl_wynik = tk.Label(window, text="Choose your figure", font=("Arial", 12), width=25, height=1, bg="lightgray")
+lbl_wynik.grid(row=3, column=3, padx=5, pady=80, sticky="nsew")
 
 
 #Classic formula for the area of square
@@ -44,7 +44,7 @@ resized_image_areaPowSquare = pil_image_areaPowSquare.resize((300, 100), Image.R
 icon_areaPowSquare = ImageTk.PhotoImage(resized_image_areaPowSquare)
 
 btn_areaPowSquare = tk.Button(window, image=icon_areaPowSquare, command=lambda: count_areaPowSquare())
-btn_areaPowSquare.grid(row=1, column=3, padx=5, pady=1, sticky="nsew")
+btn_areaPowSquare.grid(row=1, column=3, padx=5, pady=10, sticky="nsew")
 
 def count_areaPowSquare():
     triangle = figure_classes_area.PowerSquare(window)
@@ -65,7 +65,7 @@ resized_image_areaStTriang = pil_image.resize((300, 100), Image.Resampling.LANCZ
 icon = ImageTk.PhotoImage(resized_image_areaStTriang)
 
 btn = tk.Button(window, image=icon, command=lambda: count_areaStTriang())
-btn.grid(row=2, column=1, padx=5, pady=1, sticky="nsew")
+btn.grid(row=2, column=1, padx=5, pady=10, sticky="nsew")
 
 def count_areaStTriang():
     triangle = figure_classes_area.StandardTriangle(window)
@@ -86,7 +86,7 @@ resized_image_areaStRec = pil_image_areaStRec.resize((300, 100), Image.Resamplin
 icon_areaStRec = ImageTk.PhotoImage(resized_image_areaStRec)
 
 btn_areaStRec = tk.Button(window, image=icon_areaStRec, command=lambda: count_areaStRec())
-btn_areaStRec.grid(row=2, column=2, padx=5, pady=1, sticky="nsew")
+btn_areaStRec.grid(row=2, column=2, padx=5, pady=10, sticky="nsew")
 
 def count_areaStRec():
     rectangle = figure_classes_area.StandardRectangle(window)
@@ -107,7 +107,7 @@ resized_image_areaStCirc = pil_image_areaStCirc.resize((300, 100), Image.Resampl
 icon_areaStCirc = ImageTk.PhotoImage(resized_image_areaStCirc)
 
 btn_areaStCirc = tk.Button(window, image=icon_areaStCirc, command=lambda: count_areaStCirc())
-btn_areaStCirc.grid(row=2, column=3, padx=5, pady=1, sticky="nsew")
+btn_areaStCirc.grid(row=2, column=3, padx=5, pady=10, sticky="nsew")
 
 def count_areaStCirc():
     circle = figure_classes_area.StandardCircle(window)
@@ -128,7 +128,7 @@ resized_image_areaStRhom = pil_image_areaStRhom.resize((300, 100), Image.Resampl
 icon_areaStRhom = ImageTk.PhotoImage(resized_image_areaStRhom)
 
 btn_areaStRhom = tk.Button(window, image=icon_areaStRhom, command=lambda: count_areaStRhom())
-btn_areaStRhom.grid(row=2, column=4, padx=5, pady=1, sticky="nsew")
+btn_areaStRhom.grid(row=2, column=4, padx=5, pady=10, sticky="nsew")
 
 def count_areaStRhom():
     rhombus = figure_classes_area.StandardRhombus(window)
@@ -149,7 +149,7 @@ resized_image_areaStTrap = pil_image_areaStTrap.resize((300, 100), Image.Resampl
 icon_areaStTrap = ImageTk.PhotoImage(resized_image_areaStTrap)
 
 btn_areaStTrap = tk.Button(window, image=icon_areaStTrap, command=lambda: count_areaStTrap())
-btn_areaStTrap.grid(row=2, column=5, padx=5, pady=1, sticky="nsew")
+btn_areaStTrap.grid(row=2, column=5, padx=5, pady=10, sticky="nsew")
 
 def count_areaStTrap():
     trapezoid = figure_classes_area.StandardTrapezoid(window)
@@ -170,7 +170,7 @@ resized_image_volumeStCubo = pil_image_volumeStCubo.resize((300, 100), Image.Res
 icon_volumeStCubo = ImageTk.PhotoImage(resized_image_volumeStCubo)
 
 btn_volumeStCubo = tk.Button(window, image=icon_volumeStCubo, command=lambda: count_volumeStCubo())
-btn_volumeStCubo.grid(row=5, column=1, padx=5, pady=1, sticky="nsew")
+btn_volumeStCubo.grid(row=5, column=1, padx=5, pady=10, sticky="nsew")
 
 def count_volumeStCubo():
     cuboid = figure_classes_volume.StandardCuboid(window)
@@ -191,7 +191,7 @@ resized_image_volumeStCube = pil_image_volumeStCube.resize((300, 100), Image.Res
 icon_volumeStCube = ImageTk.PhotoImage(resized_image_volumeStCube)
 
 btn_volumeStCube = tk.Button(window, image=icon_volumeStCube, command=lambda: count_volumeStCube())
-btn_volumeStCube.grid(row=5, column=2, padx=5, pady=1, sticky="nsew")
+btn_volumeStCube.grid(row=5, column=2, padx=5, pady=10, sticky="nsew")
 
 def count_volumeStCube():
     cube = figure_classes_volume.StandardCube(window)
@@ -212,7 +212,7 @@ resized_image_volumeStSphere = pil_image_volumeStSphere.resize((300, 100), Image
 icon_volumeStSphere = ImageTk.PhotoImage(resized_image_volumeStSphere)
 
 btn_volumeStSphere = tk.Button(window, image=icon_volumeStSphere, command=lambda: count_volumeStSphere())
-btn_volumeStSphere.grid(row=5, column=3, padx=5, pady=1, sticky="nsew")
+btn_volumeStSphere.grid(row=5, column=3, padx=5, pady=10, sticky="nsew")
 
 def count_volumeStSphere():
     cube = figure_classes_volume.StandardSphere(window)
@@ -233,7 +233,7 @@ resized_image_volumeStCylinder = pil_image_volumeStCylinder.resize((300, 100), I
 icon_volumeStCylinder = ImageTk.PhotoImage(resized_image_volumeStCylinder)
 
 btn_volumeStCylinder = tk.Button(window, image=icon_volumeStCylinder, command=lambda: count_volumeStCylinder())
-btn_volumeStCylinder.grid(row=5, column=4, padx=5, pady=1, sticky="nsew")
+btn_volumeStCylinder.grid(row=5, column=4, padx=5, pady=10, sticky="nsew")
 
 def count_volumeStCylinder():
     cube = figure_classes_volume.StandardCylinder(window)
@@ -254,7 +254,7 @@ resized_image_volumeStCone = pil_image_volumeStCone.resize((300, 100), Image.Res
 icon_volumeStCone = ImageTk.PhotoImage(resized_image_volumeStCone)
 
 btn_volumeStCone = tk.Button(window, image=icon_volumeStCone, command=lambda: count_volumeStCone())
-btn_volumeStCone.grid(row=5, column=5, padx=5, pady=1, sticky="nsew")
+btn_volumeStCone.grid(row=5, column=5, padx=5, pady=10, sticky="nsew")
 
 def count_volumeStCone():
     cone = figure_classes_volume.StandardCone(window)
@@ -272,19 +272,18 @@ def open_my_github():
     webbrowser.open_new("https://github.com/wieslawpaleta")
 
 gt_button = Button(window, text="My GitHub Profile", font=("Courrier", 25), bg='white', fg="#000000", command=open_my_github)
-gt_button.grid(row=6, column=3, padx=5, pady=1, sticky="nsew")
+gt_button.grid(row=6, column=2, padx=5, pady=10, sticky="nsew", columnspan=3)
 
 #-----------------------------------------
 window.config(background="#FFFFFF")
 
 photo_refs = {}
+after_id = None
 
-def resize_images(event):
-    if event.widget != window:
-        return
+def perform_resize(width, height):
 
-    new_w = max(100, int(event.width / 5.5))
-    new_h = max(40, int(event.height / 8))
+    new_w = max(100, int(width / 5.5))
+    new_h = max(40, int(height / 8))
 
     all_elements = [
         (pil_image, btn),
@@ -300,23 +299,32 @@ def resize_images(event):
     ]
 
     for idx, (img, button) in enumerate(all_elements):
-        resized = img.resize((new_w, new_h), Image.Resampling.LANCZOS)
+        resized = ImageOps.contain(img, (new_w, new_h), Image.Resampling.LANCZOS)
         new_icon = ImageTk.PhotoImage(resized)
         button.config(image=new_icon)
         photo_refs[idx] = new_icon
+
+def resize_images(event):
+    global after_id
+    if event.widget != window:
+        return
+
+    if after_id is not None:
+        window.after_cancel(after_id)
+
+    after_id = window.after(100, perform_resize, event.width, event.height)
 
 window.bind("<Configure>", resize_images)
 
 for col in range(1, 6):
     window.grid_columnconfigure(col, weight=1)
 
+window.grid_rowconfigure(0, weight=1)
 window.grid_rowconfigure(1, weight=1)
 window.grid_rowconfigure(2, weight=1)
 window.grid_rowconfigure(3, weight=1)
 window.grid_rowconfigure(5, weight=1)
-
-window.grid_columnconfigure(0, weight=1)
-window.grid_rowconfigure(0, weight=1)
+window.grid_rowconfigure(6, weight=1)
 
 
 window.mainloop()
