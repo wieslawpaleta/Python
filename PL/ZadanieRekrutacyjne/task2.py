@@ -127,7 +127,7 @@ def task2(search, data):
 
 print("Pobieranie pliku 'find_match_average_v2.dat'...") # program wyświela informacje dla użytkownika, że zostaje pobrany plik, który został w zmiennej "path"
 
-path = r"C:\Users\Łukasz\Downloads\Program\Python\zadanierekrutacyjne\find_match_average_v2.dat" # wczytuję plik rekrutacyjny
+path = r"C:\Users\NazwaUżytkownika\Downloads\Program\Python\ZadanieRekrutacyjen\find_match_average_v2.dat" # wczytuję plik rekrutacyjny
 
 try: #próbujemy wczytać zawartość 
     print("Wczytywanie pliku tekstowego...") # komunikujemy użytkownikowi, że wczytujemy plik rekrutracyjny
