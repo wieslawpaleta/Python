@@ -1,0 +1,8 @@
+version: '3.8'
+
+services:
+  spark-engine:
+    build: .
+    container_name: geospatial_spark_container
+    volumes:
+      - ./output:/app/output
