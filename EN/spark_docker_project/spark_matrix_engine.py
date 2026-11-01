@@ -12,6 +12,10 @@ spark = SparkSession.builder \
     .master("local[*]") \
     .getOrCreate()
 
+# [EN] Path to input data mounted via Docker volume inside container
+# [PL] Ścieżka do danych wejściowych zamontowanych przez wolumen Dockera wewnątrz kontenera
+input_path = "/app/input/stations.csv"
+
 # [EN] Defining schema for the geospatial dataset
 # [PL] (Definiowanie schematu dla zbioru danych geosprzestrzennych)
 schema = StructType([
@@ -21,19 +25,15 @@ schema = StructType([
     StructField("signal_strength", DoubleType(), True)
 ])
 
-# [EN] Creating mock data representing spatial coordinates and signal metrics
-# [PL] (Tworzenie przykładowych danych reprezentujących współrzędne przestrzenne i metryki sygnału)
-raw_data = [
-    ("Node_A", 50.0647, 19.9450, 85.5),
-    ("Node_B", 50.0614, 19.9366, 90.2),
-    ("Node_C", 50.0700, 19.9500, 78.1),
-    ("Node_D", 50.0500, 19.9200, 65.4),
-    ("Node_E", 50.0800, 19.9600, 88.9)
-]
-
 # [EN] Creating Spark DataFrame from raw data
 # [PL] (Tworzenie DataFrame Sparka z surowych danych)
-df = spark.createDataFrame(raw_data, schema=schema)
+df = spark.read \
+     .option("header", "true") \
+     .schema(schema) \
+     .csv(input_path)
+
+print("--- [EN] DataFrame loaded from external CSV file (PL: DataFrame wczytany z zewnętrznego pliku CSV) ---")
+df.show()
 
 # [EN] Mathematical transformation: Calculating distance vector norm from origin
 # [PL] (Transformacja matematyczna: Obliczanie normy wektora odległości od początku układu)
@@ -61,6 +61,7 @@ os.makedirs(output_dir, exist_ok=True)
 # [PL] (Zapisywanie macierzy odległości do pliku CSV za pomocą Pandas)
 output_file = os.path.join(output_dir, "distance_matrix.csv")
 np.savetxt(output_file, distance_matrix, delimiter=",", fmt="%.4f")
+
 print(f"--- [EN] Success! Matrix saved to {output_file} (PL: Sukces! Macierz zapisana do pliku) ---")
 
 # [EN] Stopping Spark session gracefully
