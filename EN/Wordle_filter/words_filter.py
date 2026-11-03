@@ -3,7 +3,7 @@ import re
 import json
 import pdfplumber
 
-def extract_and_save_wordle_words(pdf_path, output_txt="wordle_words.txt", output_json="wordle_words.json"):
+def generate_multilingual_wordle_json(pdf_path, output_json="wordle_words.json"):
     # Check if file exists [Sprawdzenie, czy plik istnieje]
     if not os.path.exists(pdf_path):
         print(f"❌ Error: File '{pdf_path}' not found! [Błąd: Nie znaleziono pliku!]")
@@ -11,38 +11,31 @@ def extract_and_save_wordle_words(pdf_path, output_txt="wordle_words.txt", outpu
 
     unique_words = set()
     
-    print("⏳ Extracting text layer... [Wyciąganie warstwy tekstowej...]")
+    print("⏳ Extracting text layer from PDF... [Wyciąganie warstwy tekstowej z PDF...]")
     try:
         with pdfplumber.open(pdf_path) as pdf:
             for page in pdf.pages:
                 text = page.extract_text()
                 if text:
-                    # Find only 5-letter words made of standard alphabetic characters
-                    # [Wyszukiwanie tylko 5-literowych słów składających się z liter]
-                    words = re.findall(r'\b[a-zA-Z]{5}\b', text)
+                    # Regex supporting both Latin and Cyrillic 5-letter words 
+                    # [Wyrażenie regularne obsługujące 5-literowe słowa łacińskie i cyrylicę]
+                    words = re.findall(r'\b[a-zA-Zа-яА-ЯёЁіІїЇєЄґҐ]{5}\b', text)
                     for word in words:
-                        # Normalize to uppercase for Wordle standard [Konwersja na wielkie litery - standard Wordle]
+                        # Convert to uppercase for Wordle standard [Konwersja na wielkie litery do standardu Wordle]
                         unique_words.add(word.upper())
     except Exception as e:
         print(f"⚠️ Error reading PDF: [Błąd podczas odczytu PDF:] {e}")
 
+    # Sort words alphabetically [Sortowanie słów alfabetycznie]
     sorted_words = sorted(list(unique_words))
-    print(f"✅ Found {len(sorted_words)} unique 5-letter words. [Znaleziono {len(sorted_words)} unikalnych słów 5-literowych.]")
+    print(f"✅ Found {len(sorted_words)} unique 5-letter words (Latin + Cyrillic). [Znaleziono {len(sorted_words)} unikalnych słów (łacina + cyrylica).]")
 
-    # 1. Save to TXT file (one word per line) [Zapis do pliku TXT (jedne słowo na linijkę)]
+    # Save to JSON file with UTF-8 encoding to support Cyrillic characters properly
+    # [Zapis do pliku JSON z kodowaniem UTF-8, aby poprawnie zapisać znaki cyrylicy]
     try:
-        with open(output_txt, "w", encoding="utf-8") as f_txt:
-            for word in sorted_words:
-                f_txt.write(word + "\n")
-        print(f"📁 Saved words to TXT file: [Zapisano słowa do pliku TXT:] {output_txt}")
-    except Exception as e:
-        print(f"❌ Could not save TXT file: [Nie udało się zapisać pliku TXT:] {e}")
-
-    # 2. Save to JSON file [Zapis do pliku JSON]
-    try:
-        with open(output_json, "w", encoding="utf-8") as f_json:
-            json.dump(sorted_words, f_json, ensure_ascii=False, indent=4)
-        print(f"📁 Saved words to JSON file: [Zapisano słowa do pliku JSON:] {output_json}")
+        with open(output_json, "w", encoding="utf-8") as f:
+            json.dump(sorted_words, f, ensure_ascii=False, indent=4)
+        print(f"📁 Successfully saved to: [Pomyślnie zapisano do:] {output_json}")
     except Exception as e:
         print(f"❌ Could not save JSON file: [Nie udało się zapisać pliku JSON:] {e}")
 
@@ -50,6 +43,6 @@ def extract_and_save_wordle_words(pdf_path, output_txt="wordle_words.txt", outpu
 
 if __name__ == "__main__":
     # Use full path with r"" prefix [Użyj pełnej ścieżki z przedrostkiem r""]
-    pdf_file_path = r"C:\Users\Nazwaużytkownika\Downloads\Program\Python\Projects EN\Wordle_filter\chemia.pdf"
+    pdf_file_path = r"C:\Users\nazwauzytkownika\Downloads\Program\Python\Projects EN\Wordle_filter\chemia.pdf"
     
-    words_list = extract_and_save_wordle_words(pdf_file_path)
+    generate_multilingual_wordle_json(pdf_file_path, "wordles_words.json")
