@@ -17,12 +17,24 @@ def generate_multilingual_wordle_json(pdf_path, output_json="wordle_words.json")
             for page in pdf.pages:
                 text = page.extract_text()
                 if text:
-                    # Regex supporting both Latin and Cyrillic 5-letter words 
-                    # [Wyrażenie regularne obsługujące 5-literowe słowa łacińskie i cyrylicę]
-                    words = re.findall(r'\b[a-zA-Zа-яА-ЯёЁіІїЇєЄґҐ]{5}\b', text)
-                    for word in words:
-                        # Convert to uppercase for Wordle standard [Konwersja na wielkie litery do standardu Wordle]
-                        unique_words.add(word.upper())
+                    # 1. Fix line-break hyphens (e.g. words split across lines like word- \n word)
+                    # [Naprawianie myślników dzielących wyrazy na końcu linii]
+                    text = re.sub(r'-\s*\n\s*', '', text)
+                    
+                    # 2. Split text into individual words by whitespace
+                    # [Podział tekstu na pojedyncze słowa po białych znakach]
+                    tokens = text.split()
+                    
+                    for token in tokens:
+                        # 3. Strip surrounding punctuation (quotes, dashes, commas, etc.)
+                        # [Usuwanie otaczającej interpunkcji, cudzysłowów, myślników itp.]
+                        clean_token = re.sub(r'^[^\w]+|[^\w]+$', '', token)
+                        
+                        # 4. Check if the clean token is strictly a 5-letter standalone word (Latin or Cyrillic)
+                        # [Sprawdzanie, czy oczyszczony token to ściśle 5-literowe, samodzielne słowo (łacina lub cyrylica)]
+                        if re.match(r'^[a-zA-Zа-яА-ЯёЁіІїЇєЄґҐ]{5}$', clean_token):
+                            unique_words.add(clean_token.upper())
+                            
     except Exception as e:
         print(f"⚠️ Error reading PDF: [Błąd podczas odczytu PDF:] {e}")
 
@@ -43,6 +55,6 @@ def generate_multilingual_wordle_json(pdf_path, output_json="wordle_words.json")
 
 if __name__ == "__main__":
     # Use full path with r"" prefix [Użyj pełnej ścieżki z przedrostkiem r""]
-    pdf_file_path = r"C:\Users\nazwauzytkownika\Downloads\Program\Python\Projects EN\Wordle_filter\chemia.pdf"
+    pdf_file_path = r"C:\Users\Łukasz\Downloads\Program\Python\Projects EN\Wordle_filter\chemia.pdf"
     
     generate_multilingual_wordle_json(pdf_file_path, "wordles_words.json")
