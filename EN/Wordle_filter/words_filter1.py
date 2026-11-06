@@ -7,7 +7,7 @@ import pytesseract
 import google.generativeai as genai
 
 # Configure your Gemini API key [Konfiguracja klucza API Gemini]
-genai.configure(api_key="AQ.Ab8RN6LZcEPOzjGtT_f2wp4NUf6XOhpafaRCnRBRwkmha4Ds0Q")
+genai.configure(api_key="klucz")
 
 def process_pdf_for_wordle(pdf_path, output_json="wordle_clean_words.json"):
     # Check if the PDF file exists [Sprawdzenie, czy plik PDF istnieje]
@@ -95,5 +95,5 @@ def process_pdf_for_wordle(pdf_path, output_json="wordle_clean_words.json"):
 
 if __name__ == "__main__":
     # Path to your PDF file [Ścieżka do Twojego pliku PDF]
-    pdf_file_path = r"C:\Users\Łukasz\Downloads\Program\Python\Projects EN\Wordle_filter\chemia.pdf"
+    pdf_file_path = r"C:\Users\NazwaUżytkownika\Downloads\Program\Python\Projects EN\Wordle_filter\chemia.pdf"
     process_pdf_for_wordle(pdf_file_path)
