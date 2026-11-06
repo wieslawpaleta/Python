@@ -7,7 +7,7 @@ import pytesseract
 import google.generativeai as genai
 
 # Configure your Gemini API key [Konfiguracja klucza API Gemini]
-genai.configure(api_key="TUTAJ_WKLEJ_SWOJ_API_KEY")
+genai.configure(api_key="AQ.Ab8RN6LZcEPOzjGtT_f2wp4NUf6XOhpafaRCnRBRwkmha4Ds0Q")
 
 def process_pdf_for_wordle(pdf_path, output_json="wordle_clean_words.json"):
     # Check if the PDF file exists [Sprawdzenie, czy plik PDF istnieje]
@@ -53,14 +53,47 @@ def process_pdf_for_wordle(pdf_path, output_json="wordle_clean_words.json"):
 
     words_list = sorted(list(raw_words))
     print(f"✅ Extracted {len(words_list)} potential words. Validating with Gemini... [Wyciągnięto {len(words_list)} potencjalnych słów. Trwa weryfikacja przez Gemini...]")
-   
-   
-    # Validate words using Gemini API to filter out OCR junk/abbreviations
-    # Weryfikacja słów przy użyciu API Gemini w celu odrzucenia śmieci OCR i skrótów
-    model = genai.GenerativeModel('gemini-1.5-flash')
+
+    # 3. Validate words using Gemini API to filter out OCR junk/abbreviations
+    # [Weryfikacja słów przy użyciu API Gemini w celu odrzucenia śmieci OCR i skrótów]
+    model = genai.GenerativeModel('gemini-3.8-flash')
     verified_words = []
-    batch_size = 50
+    batch_size = 300
 
     for i in range(0, len(words_list), batch_size):
         batch = words_list[i:i + batch_size]
-        prompt = ()
+        prompt = (
+            "Review the following list of 5-letter words. Remove any acronyms, abbreviations, "
+            "partial chemical formulas, random character strings, or OCR errors that are not real, "
+            "valid standalone words. Return *only* a valid JSON array of strings containing the valid words:\n"
+            f"{json.dumps(batch, ensure_ascii=False)}"
+        )
+        try:
+            response = model.generate_content(prompt)
+            clean_text = response.text.strip()
+            if clean_text.startswith("```json"):
+                clean_text = clean_text[7:]
+            if clean_text.endswith("```"):
+                clean_text = clean_text[:-3]
+            
+            batch_result = json.loads(clean_text.strip())
+            verified_words.extend(batch_result)
+        except Exception as e:
+            print(f"⚠️ Error in batch validation: [Błąd weryfikacji partii:] {e}")
+
+    final_words = sorted(list(set(verified_words)))
+
+    # 4. Save to JSON file [Zapis do pliku JSON]
+    try:
+        with open(output_json, "w", encoding="utf-8") as f:
+            json.dump(final_words, f, ensure_ascii=False, indent=4)
+        print(f"📁 Saved clean words to: [Zapisano czyste słowa do:] {output_json}")
+    except Exception as e:
+        print(f"❌ Error saving JSON: [Błąd zapisu JSON:] {e}")
+
+    return final_words
+
+if __name__ == "__main__":
+    # Path to your PDF file [Ścieżka do Twojego pliku PDF]
+    pdf_file_path = r"C:\Users\Łukasz\Downloads\Program\Python\Projects EN\Wordle_filter\chemia.pdf"
+    process_pdf_for_wordle(pdf_file_path)

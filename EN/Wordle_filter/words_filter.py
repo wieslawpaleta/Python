@@ -55,6 +55,6 @@ def generate_multilingual_wordle_json(pdf_path, output_json="wordle_words.json")
 
 if __name__ == "__main__":
     # Use full path with r"" prefix [Użyj pełnej ścieżki z przedrostkiem r""]
-    pdf_file_path = r"C:\Users\NazwaUżytkownika\Downloads\Program\Python\Projects EN\Wordle_filter\chemia.pdf"
+    pdf_file_path = r"C:\Users\Łukasz\Downloads\Program\Python\Projects EN\Wordle_filter\chemia.pdf"
     
     generate_multilingual_wordle_json(pdf_file_path, "wordles_words.json")
