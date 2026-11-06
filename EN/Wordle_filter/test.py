@@ -1,7 +1,7 @@
 import google.generativeai as genai
 
 # Configure your Gemini API key [Konfiguracja klucza API Gemini]
-genai.configure(api_key="AQ.Ab8RN6LZcEPOzjGtT_f2wp4NUf6XOhpafaRCnRBRwkmha4Ds0Q")
+genai.configure(api_key="klucz")
 
 # List all models supporting content generation [Wyświetl wszystkie modele obsługujące generowanie treści]
 print("🔍 Checking available models for your API key... [Sprawdzanie dostępnych modeli dla Twojego klucza API...]")
