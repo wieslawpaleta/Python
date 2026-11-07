@@ -7,7 +7,7 @@ import pytesseract
 import google.generativeai as genai
 
 # Configure your Gemini API key [Konfiguracja klucza API Gemini]
-genai.configure(api_key="klucz")
+genai.configure(api_key="")
 
 def process_pdf_for_wordle(pdf_path, output_json="wordle_clean_words.json"):
     # Check if the PDF file exists [Sprawdzenie, czy plik PDF istnieje]
@@ -39,7 +39,7 @@ def process_pdf_for_wordle(pdf_path, output_json="wordle_clean_words.json"):
     # 2. Extract text from images using OCR [Wyciąganie tekstu z obrazów przy użyciu OCR]
     print("⏳ Running OCR on images... [Uruchamianie OCR na obrazach...]")
     try:
-        images = convert_from_path(pdf_path)
+        images = convert_from_path(pdf_path, poppler_path=r"C:\poppler-26.09.0\Library\bin")
         for image in images:
             ocr_text = pytesseract.image_to_string(image)
             if ocr_text:
