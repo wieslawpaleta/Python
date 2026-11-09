@@ -7,6 +7,9 @@ from scipy import signal
 # Import the fft module from SciPy to transform signal from time domain to frequency domain (Importujemy moduł 'fft' z SciPy do przekształcania sygnału ze dziedziny czasu do dziedziny częstotliwości)
 from scipy.fft import fft, fftfreq
 
+# Import the pyplot module from matplotlib to create visual charts and graphs (Importujemy moduł pyplot z biblioteki matplotlib, żeby tworzyć wizualne wykresy i grafiki)
+import matplotlib.pyplot as plt
+
 
 # Define the sampling rate: how many data points/measurements we take per second (Definiujemy częstotliwość próbkowania: ile punktów danych/pomiarów zbieramy na jedną sekundę)
 SAMPLING_RATE = 1000
@@ -67,6 +70,44 @@ b, a = signal.butter(N=4, Wn=normalized_cutoff, btype="low", analog=False)
 # Apply the filter forward and backward (filtfilt) to clear noise without shifting phase (Stosujemy filtr w przód i w tył (filtfilt), aby usunąć szum bez przesuwania fazy sygnału)
 filtered_signal = signal.filtfilt(b, a, noisy_signal)
 
+# Create a figure window with 3 separate subplots stacked vertically, sized 12 by 10 inches (Tworzymy okno figury z 3 osobnymi wykresami ułożonymi pionowo, o rozmiarze 12 na 10 cali)
+fig, (ax1, ax2, ax3) = plt.subplots(3, 1, figsize=(12, 10))
+
+# Plot time versus clean signal on the first subplot with a blue line (Rysujemy czas względem czystego wykresu na pierwszym podwykresie niebieską linią)
+ax1.plot(time, clean_signal, label="Clean Signal (Czysty sygnał)", color="blue")
+
+# Set the title for the firse subplot window (Ustawiamy tytuł dla pierwszego podwykresu)
+ax1.set_title("Cleang Signal / Czysty sygnał (5 Hz)")
+
+# Add grid lines to the first subplot to make it easier to read (Dodajemy linie siatki do pierwszego podwykresu, żeby łatwiej się czytało)
+ax1.grid(True)
+
+
+# Plot time versus noisy signal on the second subplot with an orange line (Rysujemy czas względem zaszumionego sygnału na drugim podwykresie pomarańczową linią))
+ax2.plot(time, noisy_signal, label="Noisy Signal (Zaszumiony sygnał)", color="orange")
+
+# Set the title for the second subplot window (Ustawiamy tytuł dla drugiego podwykresu)
+ax2.set_title("Noisy Signal (Zaszumiony sygnał z szumem wysokiej częstotliwości)")
+
+# Add grid lines to the second subplot (Dodajemy linie siatki do drugiego podwykresu)
+ax2.grid(True)
+
+
+# Plot time versus filtered signal on the third subplot with a green line (Rysujemy czas względem przefiltrowanego sygnału na trzecim podwykresie zieloną linią)
+ax3.plot(time, filtered_signal, label="Filtered Signal (Przefiltrowany sygnał)", color="green"),
+
+# Set the title for the third subplot window (Ustawiamy tytuł dla trzeciego podwykresu)
+ax3.set_title("Filtered Signal (Przefiltrowany sygnał po odcięciu filtrów)")
+
+# Add grid lines to the third subplot (Dodajemy linie siatki do trzeciego podwykresu)
+ax3.grid(True)
+
+
+# Automatically adjust spacing between subplots so labels don't overlap (Automatycznie dopasowujemy odstępy między podwykresami, żeby napisy na siebie nie nachodziły)
+plt.tight_layout()
+
+# Display the generated charts in a pop-up window (Wyświetlamy wygenerowane wykresy w osobnym wyskakującym oknie)
+plt.show()
 
 # Calculate Mean Squared Error (MSE) between clean signal and noisy signal (Obliczamy błąd średniokwadratowy (MSE) między czystym sygnałem a zaszumionym sygnałem)
 noisy_mse = np.mean((clean_signal - noisy_signal) ** 2)
