@@ -1,3 +1,6 @@
+# Import the argparse module to parse command-line arguments passed from the terminal (Importujemy moduł argparse do parsowania argumentów wiersza poleceń przekazywanych z terminala)
+import argparse
+
 # Import the NumPy library for numerical operations and matrix calculations (Importujemy bibliotekę NumPy do operacji numerycznych i obliczeń na macierzach/tablicach)
 import numpy as np
 
@@ -11,30 +14,53 @@ from scipy.io import wavfile
 import matplotlib.pyplot as plt
 
 
-# Define the filename of our input audio file to load (Definiujemy nazwę pliku naszego wejściowego pliku dźwiękowego do wczytania)
-INPUT_FILENAME = r"C:\Users\NazwaUżytkownika\Downloads\Program\Python\Projects EN\Automated_Audio_Signal_Noise_Detector_And_Filter\modemsciana.wav"
+# Define a class called AudioCleaner to bundle all audio processing logic together (Definiujemy klasę o nazwie AudioCleaner, aby połączyć całą logikę przetwarzania dźwięku w jedną całość)
+class AudioCleaner:
 
-# Define the filename where our cleaned output audio will be saved (Definiujemy nazwę pliku, w którym zapiszemy nasz oczyszczony wyjściowy dźwięk)
-OUTPUT_FILENAME = "output_audio.wav"
+    # Define the initialization constructor method for our class (Definiujemy metodę konstruktora inicjalizującego dla naszej klasy)
+    def __init__(self, input_file, output_file, cutoff_freq):
+        # Save the input file path as an object attribute (Zapisujemy ścieżkę pliku wejściowego jako atrybut obiektu)
+        self.input_file = input_file
 
+        # Save the output file path as an object attribute (Zapisujemy ścieżkę pliku wyjściowego jako atrybut obiektu)
+        self.output_file = output_file
 
-# Read the sampling rate and raw audio data from the .wav file (Odczytujemy częstotliwość próbkowania oraz surowe dane dźwiękowe z pliku .wav)
-sampling_rate, audio_data = wavfile.read(INPUT_FILENAME)
+        # Save the cutoff frequency value as an object attribute (Zapisujemy wartość częstotliwości odcięcia jako atrybut obiektu)
+        self.cutoff_freq = cutoff_freq
 
-# Check if the audio file has two channels (stereo) and convert it to mono by averaging them (Sprawdzamy, czy plik dźwiękowy ma dwa kanały (stereo) i konwertujemy go do mono poprzez uśrednienie ich)
-if len(audio_data.shape) > 1:
-    audio_data = np.mean(audio_data, axis=1)
+        # Initialize sampling_rate attribute as None before loading (Inicjalizujemy atrybut częstotliwości próbkowania jako None przed wczytaniem)
+        self.sampling_rate = None
 
-# Normalize integer audio data to floating-point values between -1.0 and 1.0 (Normalizujemy całkowitoliczbowe dane dźwiękowe do wartości zmiennoprzecinkowych z zakresu od -1.0 do 1.0)
-audio_data = audio_data / np.max(np.abs(audio_data))
+        # Initialize audio_data attribute as None before loading (Inicjalizujemy atrybut danych dźwiękowych jako None przed wczytaniem)
+        self.audio_data = None
 
-# Calculate the total duration of the loaded audio file in seconds (Obliczamy całkowity czas trwania wczytanego pliku dźwiękowego w sekundach)
-DURATION = len(audio_data) / sampling_rate
+        # Initialize time attribute as None before calculation (Inicjalizujemy atrybut czasu jako None przed obliczeniem)
+        self.time = None
 
-# Create an array of time steps for each sample based on the sampling rate (Tworzymy tablicę kroków czasowych dla każdej próbki na podstawie częstotliwości próbkowania)
-time = np.arange(0, len(audio_data)) / sampling_rate
+        # Initialize noisy_signal attribute as None before generation (Inicjalizujemy atrybut zaszumionego sygnału jako None przed wygenerowaniem)
+        self.noisy_signal = None
 
+        # Initialize filtered_signal attribute as None before filtering (Inicjalizujemy atrybut przefiltrowanego sygnału jako None przed filtrowaniem)
+        self.filtered_signal = None
 
+    # Define a method to load and normalize the audio file (Definiujemy metodę do wczytywania i normalizacji pliku dźwiękowego)
+    def load_audio(self):
+        # Read sampling rate and raw audio data from the input .wav file (Odczytujemy częstotliwość próbkowania i surowe dane dźwiękowe z wejściowego pliku .wav)
+        self.sampling_rate, self.audio_data = wavfile.read(self.input_file)
+
+        # Check if the audio file has multiple dimensions (stereo channels) (Sprawdzamy, czy plik dźwiękowy ma wiele wymiarów (kanały stereo))
+        if len(self.audio_data.shape) > 1:
+            # Convert stereo audio to mono by calculating the mean across channels (Konwertujemy dźwięk stereo na mono poprzez obliczenie średniej wzdłuż kanałów)
+            self.audio_data = np.mean(self.audio_data, axis=1)
+
+        # Normalize the audio array values to float numbers between -1.0 and 1.0 (Normalizujemy wartości tablicy dźwiękowej do liczb zmiennoprzecinkowych z zakresu od -1.0 do 1.0)
+        self.audio_data = self.audio_data / np.max(np.abs(self.audio_data))
+
+        # Create an array of time steps for every sample in the audio (Tworzymy tablicę kroków czasowych dla każdej próbki w dźwięku)
+        self.time = np.arange(0, len(self.audio_data)) / self.sampling_rate
+
+# Define a method to add synthetic high-frequency noise and white noise (Definiujemy metodę do dodawania sztucznego szumu wysokiej częstotliwości oraz szumu białego)
+def add_noise(self):
 # Treat the loaded and normalized audio as our clean signal source (Traktujemy wczytany i znormalizowany dźwięk jako nasze źródło czystego sygnału)
 clean_signal = audio_data
 
