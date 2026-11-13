@@ -59,87 +59,146 @@ class AudioCleaner:
         # Create an array of time steps for every sample in the audio (Tworzymy tablicę kroków czasowych dla każdej próbki w dźwięku)
         self.time = np.arange(0, len(self.audio_data)) / self.sampling_rate
 
-# Define a method to add synthetic high-frequency noise and white noise (Definiujemy metodę do dodawania sztucznego szumu wysokiej częstotliwości oraz szumu białego)
-def add_noise(self):
-# Treat the loaded and normalized audio as our clean signal source (Traktujemy wczytany i znormalizowany dźwięk jako nasze źródło czystego sygnału)
-clean_signal = audio_data
+    # Define a method to add synthetic high-frequency noise and white noise (Definiujemy metodę do dodawania sztucznego szumu wysokiej częstotliwości oraz szumu białego)
+    def add_noise(self):
+        # Fix the random seed to ensure consistent noise generation across runs (Ustawiamy ziarno losowości, aby zapewnić spójne generowanie szumu przy kolejnych uruchomieniach)
+        np.random.seed(42)
+
+        # Generate high-frequency sinusoidal noise to simulate interference (Generujemy szum sinusoidalny o wysokiej częstotliwości, aby symulować zakłócenia)
+        noise_high_freq = 0.3 * np.sin(2 * np.pi * 1500 * self.time)
+
+        # Generate random white noise using a normal Gaussian distribution (Generujemy losowy szum biały, używając normalnego rozkładu Gaussa)
+        random_white_noise = np.random.normal(0, 0.1, len(self.time))
+
+        # Add the noise components to the original clean audio signal (Dodajemy elementy szumu do oryginalnego czystego sygnału dźwiękowego)
+        self.noisy_signal = self.audio_data + noise_high_freq + random_white_noise
+
+    # Define a method to filter out noise using a Butterworth low-pass filter (Definiujemy metodę do odfiltrowywania szumu za pomocą dolnoprzepustowego filtru Butterwortha)
+    def filter_signal(self):
+        # Calculate the Nyquist frequency, which is half of the sampling rate (Obliczamy częstotliwość Nyquista, która stanowi połowę częstotliwości próbkowania)
+        nyquist_freq = 0.5 * self.sampling_rate
+
+        # Normalize the custom cutoff frequency relative to the Nyquist frequency (Normalizujemy niestandardową częstotliwość odcięcia względem częstotliwości Nyquista)
+        normalized_cutoff = self.cutoff_freq / nyquist_freq
+
+        # Create filter coefficients (b, a) for a 4th-order Butterworth low-pass filter (Tworzymy współczynniki filtra (b, a) dla filtru dolnoprzepustowego Butterwortha 4. rzędu)
+        b, a = signal.butter(
+            N=4, Wn=normalized_cutoff, btype="low", analog=False
+        )
+
+        # Apply the filter forward and backward to remove noise without phase delay (Stosujemy filtr w przód i w tył, aby usunąć szum bez opóźnienia fazowego)
+        self.filtered_signal = signal.filtfilt(b, a, self.noisy_signal)
+
+    # Define a method to save the cleaned audio signal back to disk as a .wav file (Definiujemy metodę do zapisywania oczyszczonego sygnału dźwiękowego z powrotem na dysk jako plik .wav)
+    def save_audio(self):
+        # Convert floating-point signal back to 16-bit signed integers for WAV format (Konwertujemy sygnał zmiennoprzecinkowy z powrotem na 16-bitowe liczby całkowite ze znakiem dla formatu WAV)
+        filtered_int16 = np.int16(self.filtered_signal * 32767)
+
+        # Write the processed audio data into the specified output filename (Zapisujemy przetworzone dane dźwiękowe do wskazanej nazwy pliku wyjściowego)
+        wavfile.write(self.output_file, self.sampling_rate, filtered_int16)
+
+    # Define a method to display comparison graphs using Matplotlib (Definiujemy metodę do wyświetlania wykresów porównawczych za pomocą biblioteki Matplotlib)
+    def plot_signals(self):
+        # Create a figure window containing 3 vertically stacked subplots (Tworzymy okno figury zawierające 3 ułożone pionowo podwykresy)
+        fig, (ax1, ax2, ax3) = plt.subplots(3, 1, figsize=(12, 10))
+
+        # Plot time versus original clean audio on the first subplot (Rysujemy czas względem oryginalnego czystego dźwięku na pierwszym podwykresie)
+        ax1.plot(self.time, self.audio_data, color="blue")
+        ax1.set_title("Original Audio Signal / Oryginalny sygnał dźwiękowy")
+        ax1.grid(True)
+
+        # Plot time versus noisy audio on the second subplot (Rysujemy czas względem zaszumionego dźwięku na drugim podwykresie)
+        ax2.plot(self.time, self.noisy_signal, color="orange")
+        ax2.set_title("Noisy Audio Signal / Zaszumiony sygnał dźwiękowy")
+        ax2.grid(True)
+
+        # Plot time versus filtered audio on the third subplot (Rysujemy czas względem przefiltrowanego dźwięku na trzecim podwykresie)
+        ax3.plot(self.time, self.filtered_signal, color="green")
+        ax3.set_title("Filtered Audio Signal / Przefiltrowany sygnał dźwiękowy")
+        ax3.grid(True)
+
+        # Adjust subplot layouts automatically so they don't overlap (Automatycznie dostosowujemy układy podwykresów, żeby na siebie nie nachodziły)
+        plt.tight_layout()
+
+        # Render and open the interactive chart window on screen (Renderujemy i otwieramy interaktywne okno wykresu na ekranie)
+        plt.show()
+
+    # Define a method to evaluate and print performance metrics (Definiujemy metodę do obliczania i wypisywania wskaźników wydajności)
+    def evaluate(self):
+        # Calculate Mean Squared Error between clean audio and noisy audio (Obliczamy błąd średniokwadratowy między czystym dźwiękiem a zaszumionym dźwiękiem)
+        noisy_mse = np.mean((self.audio_data - self.noisy_signal) ** 2)
+
+        # Calculate Mean Squared Error between clean audio and filtered audio (Obliczamy błąd średniokwadratowy między czystym dźwiękiem a przefiltrowanym dźwiękiem)
+        filtered_mse = np.mean((self.audio_data - self.filtered_signal) ** 2)
+
+        # Print the noise error value to the console (Wyświetlamy wartość błędu szumu w konsoli)
+        print(f"Noise Signal MSE (Błąd zaszumionego sygnału): {noisy_mse:.4f}")
+
+        # Print the filtered error value to the console (Wyświetlamy wartość błędu przefiltrowanego w konsoli)
+        print(f"Filtered Signal MSE (Błąd przefiltrowanego sygnału): {filtered_mse:.4f}")
+
+        # Calculate percentage improvement in signal quality (Obliczamy procentową poprawę jakości sygnału)
+        improvement = ((noisy_mse - filtered_mse) / noisy_mse) * 100
+
+        # Print the overall percentage reduction improvement (Wyświetlamy ogólną procentową poprawę redukcji szumu)
+        print(f"Signal Noise Reduction Improvement (Poprawa jakości sygnału): {improvement:.2f}%")
 
 
-# Fix the random seed so we get the exact same random numbers every time we run the code (Ustawiamy ziarno losowości, aby generować dokładnie te same losowe liczby przy każdym uruchomieniu kodu)
-np.random.seed(42)
+# Check if the script is being run directly from the command line (Sprawdzamy, czy skrypt jest uruchamiany bezpośrednio z wiersza poleceń)
+if __name__ == "__main__":
+    # Create an argument parser object to handle CLI inputs (Tworzymy obiekt parsera argumentów do obsługi wejść z CLI)
+    parser = argparse.ArgumentParser(
+        description="Automated Audio Signal Noise Detector & Filter (Automatyczny detektor i filtr szumów w sygnałach audio)"
+    )
 
-# Generate high-frequency random noise using a sine wave to simulate interference (Generujemy losowy szum o wysokiej częstotliwości używając fali sinusoidalnej, aby symulować zakłócenia)
-noise_high_freq = 0.3 * np.sin(2 * np.pi * 1500 * time)
+    # Add an argument for the input wav filename with a default value (Dodajemy argument dla wejściowej nazwy pliku wav z wartością domyślną)
+    parser.add_argument(
+        "--input",
+        type=str,
+        default= r"C:\Users\NazwaUżytkownika\Downloads\Program\Python\Projects EN\Automated_Audio_Signal_Noise_Detector_And_Filter\input_audio.wav",
+        help="Path to input .wav file (Ścieżka do wejściowego pliku .wav)",
+    )
 
-# Generate pure random white noise using a normal distribution (Generujemy czysty losowy szum biały używając rozkładu normalnego)
-random_white_noise = np.random.normal(0, 0.1, len(time))
+    # Add an argument for the output wav filename with a default value (Dodajemy argument dla wyjściowej nazwy pliku wav z wartością domyślną)
+    parser.add_argument(
+        "--output",
+        type=str,
+        default="output_audio.wav",
+        help="Path to output .wav file (Ścieżka do wyjściowego pliku .wav)",
+    )
 
-# Combine the clean signal and all noise components together into a messy signal (Łączymy czysty sygnał ze wszystkimi elementami szumu w jeden zaszumiony sygnał)
-noisy_signal = clean_signal + noise_high_freq + random_white_noise
+    # Add an argument for the low-pass filter cutoff frequency with a default value (Dodajemy argument dla częstotliwości odcięcia filtru dolnoprzepustowego z wartością domyślną)
+    parser.add_argument(
+        "--cutoff",
+        type=float,
+        default=800.0,
+        help="Cutoff frequency in Hz (Częstotliwość odcięcia w Hz)",
+    )
 
+    # Parse all command-line arguments provided by the user (Parsujemy wszystkie argumenty wiersza poleceń podane przez użytkownika)
+    args = parser.parse_args()
 
-# Define the cutoff frequency for our low-pass filter in Hertz (Definiujemy częstotliwość odcięcia dla naszego filtru dolnoprzepustowego w Hercach)
-CUTOFF_FREQUENCY = 800.0
+    # Instantiate our AudioCleaner class with parsed command-line arguments (Tworzymy instancję naszej klasy AudioCleaner z zaparsowanymi argumentami wiersza poleceń)
+    cleaner = AudioCleaner(
+        input_file=args.input,
+        output_file=args.output,
+        cutoff_freq=args.cutoff,
+    )
 
-# Calculate the Nyquist frequency, which is half of the sampling rate (Obliczamy częstotliwość Nyquista, która stanowi połowę częstotliwości próbkowania)
-nyquist_freq = 0.5 * sampling_rate
+    # Call the load method to fetch and prepare audio data (Wywołujemy metodę wczytywania, aby pobrać i przygotować dane dźwiękowe)
+    cleaner.load_audio()
 
-# Normalize the cutoff frequency relative to the Nyquist frequency as required by SciPy (Normalizujemy częstotliwość odcięcia względem częstotliwości Nyquista, co jest wymagane przez SciPy)
-normalized_cutoff = CUTOFF_FREQUENCY / nyquist_freq
+    # Call the add_noise method to corrupt the signal for testing (Wywołujemy metodę add_noise, aby zafałszować sygnał w celach testowych)
+    cleaner.add_noise()
 
-# Create coefficients (b, a) for a 4th-order Butterworth low-pass filter (Tworzymy współczynniki (b, a) dla filtru dolnoprzepustowego Butterwortha 4. rzędu)
-b, a = signal.butter(N=4, Wn=normalized_cutoff, btype="low", analog=False)
+    # Call the filter_signal method to clean up the noise (Wywołujemy metodę filter_signal, żeby oczyścić szum)
+    cleaner.filter_signal()
 
-# Apply the filter forward and backward to clear noise without phase shift (Stosujemy filtr w przód i w tył, aby usunąć szum bez przesunięcia fazowego)
-filtered_signal = signal.filtfilt(b, a, noisy_signal)
+    # Call the save_audio method to export the resulting .wav file (Wywołujemy metodę save_audio, aby wyeksportować powstały plik .wav)
+    cleaner.save_audio()
 
+    # Call the evaluate method to print error statistics to the console (Wywołujemy metodę evaluate, aby wypisać statystyki błędów do konsoli)
+    cleaner.evaluate()
 
-# Convert the floating-point filtered signal back to 16-bit integers for WAV format (Konwertujemy przefiltrowany sygnał zmiennoprzecinkowy z powrotem na 16-bitowe liczby całkowite dla formatu WAV)
-filtered_int16 = np.int16(filtered_signal * 32767)
-
-# Save the cleaned audio array into a new output .wav file on disk (Zapisujemy tablicę oczyszczonego dźwięku do nowego wyjściowego pliku .wav na dysku)
-wavfile.write(OUTPUT_FILENAME, sampling_rate, filtered_int16)
-
-
-# Create a figure window with 3 separate subplots stacked vertically (Tworzymy okno figury z 3 osobnymi podwykresami ułożonymi pionowo)
-fig, (ax1, ax2, ax3) = plt.subplots(3, 1, figsize=(12, 10))
-
-# Plot time versus clean signal on the first subplot (Rysujemy czas względem czystego sygnału na pierwszym podwykresie)
-ax1.plot(time, clean_signal, label="Original Audio (Oryginalny dźwięk)", color="blue")
-ax1.set_title("Original Audio Signal from .wav file / Oryginalny sygnał z pliku .wav")
-ax1.grid(True)
-
-# Plot time versus noisy signal on the second subplot (Rysujemy czas względem zaszumionego sygnału na drugim podwykresie)
-ax2.plot(time, noisy_signal, label="Noisy Audio (Zaszumiony dźwięk)", color="orange")
-ax2.set_title("Noisy Audio Signal (Zaszumiony dźwięk z dodatkowym szumem)")
-ax2.grid(True)
-
-# Plot time versus filtered signal on the third subplot (Rysujemy czas względem przefiltrowanego sygnału na trzecim podwykresie)
-ax3.plot(time, filtered_signal, label="Filtered Audio (Przefiltrowany dźwięk)", color="green")
-ax3.set_title("Filtered Audio Signal (Przefiltrowany dźwięk po usunięciu szumu)")
-ax3.grid(True)
-
-# Automatically adjust spacing between subplots (Automatycznie dopasowujemy odstępy między podwykresami)
-plt.tight_layout()
-
-# Display the generated charts in a pop-up window (Wyświetlamy wygenerowane wykresy w wyskakującym oknie)
-plt.show()
-
-
-# Calculate Mean Squared Error (MSE) between clean signal and noisy signal (Obliczamy błąd średniokwadratowy (MSE) między czystym sygnałem a zaszumionym sygnałem)
-noisy_mse = np.mean((clean_signal - noisy_signal) ** 2)
-
-# Calculate Mean Squared Error (MSE) between clean signal and filtered signal (Obliczamy błąd średniokwadratowy (MSE) między czystym sygnałem a przefiltrowanym sygnałem)
-filtered_mse = np.mean((clean_signal - filtered_signal) ** 2)
-
-# Print the noise error result to the console (Wyświetlamy wynik błędu szumu w konsoli)
-print(f"Noise Signal MSE (Błąd zaszumionego sygnału): {noisy_mse:.4f}")
-
-# Print the filtered signal error result to the console (Wyświetlamy wynik błędu przefiltrowanego sygnału w konsoli)
-print(f"Filtered Signal MSE (Błąd przefiltrowanego sygnału): {filtered_mse:.4f}")
-
-# Calculate percentage improvement after noise filtering (Obliczamy procentową poprawę jakości po przefiltrowaniu szumu)
-improvement = ((noisy_mse - filtered_mse) / noisy_mse) * 100
-
-# Print the overall percentage improvement (Wyświetlamy ogólną procentową poprawę jakości)
-print(f"Signal Noise Reduction Improvement (Poprawa jakości sygnału): {improvement:.2f}%")
+    # Call the plot_signals method to render visual comparison charts (Wywołujemy metodę plot_signals, aby wyrenderować wizualne wykresy porównawcze)
+    cleaner.plot_signals()
