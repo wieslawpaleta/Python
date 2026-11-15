@@ -1,29 +1,52 @@
-import requests  # Import the requests library so Python can make internet HTTP requests (Zaimportuj bibliotekę requests, aby Python mógł wysyłać żądania HTTP do internetu)
+import csv  # Import the built-in csv module to handle writing data rows into comma-separated value files (Zaimportuj wbudowany moduł csv do obsługi zapisywania wierszy danych do plików wartości rozdzielanych przecinkami)
+from datetime import datetime  # Import the datetime class to capture current dates and times (Zaimportuj klasę datetime do rejestrowania aktualnych dat i godzin)
+import time  # Import the time module so we can pause execution between loop runs using sleep (Zaimportuj moduł time, abyśmy mogli wstrzymywać wykonywanie programu pomiędzy kolejnymi obiegami pętli za pomocą funkcji sleep)
+import requests  # Import the requests library to make HTTP network calls to Binance (Zaimportuj bibliotekę requests do wykonywania sieciowych żądań HTTP do Binance)
 
-def fetch_crypto_price(symbol):  # Define a custom function named fetch_crypto_price that takes a text symbol parameter like 'BTCUSDT' (Zdefiniuj funkcję niestandardową o nazwie fetch_crypto_price, która przyjmuje tekstowy parametr symbol, np. 'BTCUSDT')
-    url = f"tu adres api"  # Create the target web address string by inserting the variable symbol into the Binance API URL string (Stwórz ciąg znaków docelowego adresu internetowego, wstawiając zmienną symbol do adresu URL API Binance)
+def fetch_crypto_price(symbol):  # Define a function named fetch_crypto_price that accepts a string symbol argument like 'BTCUSDT' (Zdefiniuj funkcję o nazwie fetch_crypto_price, która przyjmuje argument w postaci ciągu znaków symbolu, np. 'BTCUSDT')
+    url = f"https://api.binance.com/api/v3/ticker/price?symbol={symbol}"  # Construct the target API URL string by inserting the symbol parameter (Skonstruuj ciąg docelowego adresu URL API, wstawiając parametr symbolu)
     
-    try:  # Start a try block to safely catch runtime errors if the internet or API goes down (Rozpocznij blok try, aby bezpiecznie łapać błędy wykonania, jeśli internet lub API przestanie działać)
-        response = requests.get(url)  # Send an HTTP GET request to the Binance server and save the entire server response object into a variable (Wyślij żądanie HTTP GET do serwera Binance i zapisz cały obiekt odpowiedzi serwera w zmiennej)
-        response.raise_for_status()  # Check if the HTTP status code indicates success (200); if it is an error code like 404 or 500, automatically throw an exception (Sprawdź, czy kod statusu HTTP wskazuje sukces - 200; jeśli jest to kod błędu, np. 404 lub 500, automatycznie rzuć wyjątek)
+    try:  # Start a try block to handle any network or internet errors safely (Rozpocznij blok try, aby bezpiecznie obsłużyć wszelkie błędy sieciowe lub internetowe)
+        response = requests.get(url)  # Send an HTTP GET request to Binance server and store the response object (Wyślij żądanie HTTP GET do serwera Binance i zapisz obiekt odpowiedzi)
+        response.raise_for_status()  # Check if the HTTP status code is 200 OK; raise an exception if it is an error code (Sprawdź, czy kod statusu HTTP to 200 OK; wyrzuć wyjątek, jeśli jest to kod błędu)
         
-        data = response.json()  # Convert the raw JSON text response from the server into a native Python dictionary object (Konwertuj surową odpowiedź tekstową JSON z serwera na wbudowany obiekt słownika Pythona)
-        price = float(data['price'])  # Extract the value stored under the 'price' key from the dictionary and convert it from a text string into a decimal float number (Wyciągnij wartość zapisaną pod kluczem 'price' ze słownika i skonwertuj ją z tekstu na liczbę zmiennoprzecinkową typu float)
+        data = response.json()  # Parse the raw JSON response text from the server into a Python dictionary object (Przeanalizuj surowy tekst odpowiedzi JSON z serwera na obiekt słownika Pythona)
+        price = float(data['price'])  # Extract the price value string from the dictionary and convert it to a decimal float number (Wyciągnij ciąg wartości ceny ze słownika i skonwertuj go na liczbę zmiennoprzecinkową typu float)
         
-        return price  # Send the final numeric price back out of the function to wherever it was called (Zwróć ostateczną cenę numeryczną na zewnątrz funkcji tam, gdzie została wywołana)
+        return price  # Return the numerical price value out of the function (Zwróć numeryczną wartość ceny z funkcji)
         
-    except requests.exceptions.RequestException as e:  # Catch any network errors or connection issues and store the error message inside variable e (Złap wszelkie błędy sieciowe lub problemy z połączeniem i zapisz komunikat o błędzie w zmiennej e)
-        print(f"Error fetching data for {symbol}: {e}")  # Print a friendly error message to the console explaining which symbol failed and why (Wypisz przyjazny komunikat o błędzie na konsoli, wyjaśniający, który symbol zawiódł i dlaczego)
-        return None  # Return the special value None because fetching failed completely (Zwróć specjalną wartość None, ponieważ pobieranie całkowicie się nie powiodło)
+    except requests.exceptions.RequestException as e:  # Catch any network exception or request failure and store error in variable e (Złap dowolny wyjątek sieciowy lub błąd żądania i zapisz błąd w zmiennej e)
+        print(f"Error fetching data for {symbol}: {e}")  # Print a descriptive error message to the console screen (Wypisz opisowy komunikat o błędzie na ekranie konsoli)
+        return None  # Return None since the fetching operation failed completely (Zwróć None, ponieważ operacja pobierania całkowicie się nie powiodła)
 
-if __name__ == "__main__":  # Check if this Python script is being executed directly as the main program (Sprawdź, czy ten skrypt Pythona jest uruchamiany bezpośrednio jako program główny)
-    print("Fetching live crypto prices from Binance...")  # Print a starting status message to the console screen (Wypisz początkowy komunikat o statusie na ekranie konsoli)
+def save_to_csv(filename, data_row):  # Define a function to append a new row of data into a target CSV file (Zdefiniuj funkcję do dopisywania nowego wiersza danych do docelowego pliku CSV)
+    with open(filename, mode='a', newline='', encoding='utf-8') as file:  # Open the target file in append mode ('a') safely using a context manager with UTF-8 encoding (Otwórz docelowy plik w trybie dopisywania ('a') bezpiecznie za pomocą menedżera kontekstu z kodowaniem UTF-8)
+        writer = csv.writer(file)  # Create a CSV writer helper object to format rows correctly (Utwórz obiekt pomocniczy zapisujący CSV do poprawnego formatowania wierszy)
+        writer.writerow(data_row)  # Write the list of data values as a brand new row at the end of the file (Zapisz listę wartości danych jako zupełnie nowy wiersz na końcu pliku)
+
+if __name__ == "__main__":  # Check if this script is being executed directly as the main program (Sprawdź, czy ten skrypt jest wykonywany bezpośrednio jako program główny)
+    csv_filename = "crypto_prices.csv"  # Define the string variable holding our CSV file name (Zdefiniuj zmienną ciągową przechowującą nazwę naszego pliku CSV)
+    print("Starting continuous crypto price tracker... Press Ctrl+C to stop.")  # Print a starting notification message to the console (Wypisz początkowy komunikat powiadomienia na konsoli)
     
-    btc_price = fetch_crypto_price("BTCUSDT")  # Call our function with 'BTCUSDT' to fetch Bitcoin's price and store the result in btc_price (Wywołaj naszą funkcję z argumentem 'BTCUSDT', aby pobrać cenę Bitcoina i zapisać wynik w btc_price)
-    eth_price = fetch_crypto_price("ETHUSDT")  # Call our function with 'ETHUSDT' to fetch Ethereum's price and store the result in eth_price (Wywołaj naszą funkcję z argumentem 'ETHUSDT', aby pobrać cenę Ethereum i zapisać wynik w eth_price)
-    
-    if btc_price is not None:  # Check if the returned Bitcoin price is not None (meaning it was successfully retrieved) (Sprawdź, czy zwrócona cena Bitcoina nie jest wartością None - co oznacza, że została pomyślnie pobrana)
-        print(f"Bitcoin Price: ${btc_price:,.2f}")  # Print the formatted Bitcoin price with a dollar symbol, thousands separator commas, and exactly two decimal places (Wypisz sformatowaną cenę Bitcoina z symbolem dolara, przecinkami oddzielającymi tysiące i dokładnie dwoma miejscami po przecinku)
-        
-    if eth_price is not None:  # Check if the returned Ethereum price is not None (meaning it was successfully retrieved) (Sprawdź, czy zwrócona cena Ethereum nie jest wartością None - co oznacza, że została pomyślnie pobrana)
-        print(f"Ethereum Price: ${eth_price:,.2f}")  # Print the formatted Ethereum price with a dollar symbol, thousands separator commas, and exactly two decimal places (Wypisz sformatowaną cenę Ethereum z symbolem dolara, przecinkami oddzielającymi tysiące i dokładnie dwoma miejscami po przecinku)
+    try:  # Start a try block to catch KeyboardInterrupt when user stops the script with Ctrl+C (Rozpocznij blok try, aby złapać KeyboardInterrupt, gdy użytkownik zatrzyma skrypt za pomocą skrótu Ctrl+C)
+        while True:  # Start an infinite loop so the code repeats continuously forever (Rozpocznij nieskończoną pętlę, aby kod powtarzał się w nieskończoność)
+            timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")  # Capture the current timestamp formatted nicely as a readable string (Zarejestruj bieżący znacznik czasu sformatowany ładnie jako czytelny ciąg znaków)
+            
+            btc_price = fetch_crypto_price("BTCUSDT")  # Call function to fetch the live Bitcoin price from Binance (Wywołaj funkcję, aby pobrać cenę Bitcoina na żywo z Binance)
+            eth_price = fetch_crypto_price("ETHUSDT")  # Call function to fetch the live Ethereum price from Binance (Wywołaj funkcję, aby pobrać cenę Ethereum na żywo z Binance)
+            
+            if btc_price is not None:  # Check if the Bitcoin price was successfully returned (Sprawdź, czy cena Bitcoina została pomyślnie zwrócona)
+                btc_row = [timestamp, "BTCUSDT", btc_price]  # Create a list representing the CSV row for Bitcoin (Utwórz listę reprezentującą wiersz CSV dla Bitcoina)
+                save_to_csv(csv_filename, btc_row)  # Call helper function to append Bitcoin data into the CSV file (Wywołaj funkcję pomocniczą, aby dopisać dane Bitcoina do pliku CSV)
+                print(f"Saved: {btc_row}")  # Print confirmation message to the console screen (Wypisz komunikat potwierdzenia na ekranie konsoli)
+                
+            if eth_price is not None:  # Check if the Ethereum price was successfully returned (Sprawdź, czy cena Ethereum została pomyślnie zwrócona)
+                eth_row = [timestamp, "ETHUSDT", eth_price]  # Create a list representing the CSV row for Ethereum (Utwórz listę reprezentującą wiersz CSV dla Ethereum)
+                save_to_csv(csv_filename, eth_row)  # Call helper function to append Ethereum data into the CSV file (Wywołaj funkcję pomocniczą, aby dopisać dane Ethereum do pliku CSV)
+                print(f"Saved: {eth_row}")  # Print confirmation message to the console screen (Wypisz komunikat potwierdzenia na ekranie konsoli)
+                
+            print("Waiting 10 seconds before next fetch...\n")  # Print a status message indicating a pause period (Wypisz komunikat o statusie wskazujący okres pauzy)
+            time.sleep(10)  # Pause script execution for 10 seconds before looping again (Wstrzymaj wykonywanie skryptu na 10 sekund przed ponownym rozpoczęciem pętli)
+            
+    except KeyboardInterrupt:  # Catch the exception triggered when the user presses Ctrl+C in the terminal (Złap wyjątek wywołany, gdy użytkownik naciśnie Ctrl+C w terminalu)
+        print("\nTracker stopped gracefully by user. Good job!")  # Print a friendly goodbye message when exiting (Wypisz przyjazny komunikat pożegnalny przy wychodzeniu z programu)
