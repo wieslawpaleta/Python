@@ -22,7 +22,7 @@ monitor_area = {
 FPS = 30
 
 # Initialize screen capture using mss (Inicjalizujemy przechwytywanie ekranie za pomocą mss)
-with mss.mss() as sct:
+with mss.MSS() as sct:
 
     # Start the virtual camera context with matching width, height, and fps (Uruchamiamy kontekst wirtualnej kamery z pasującą szerokością, wysokością i fps)
     with pyvirtualcam.Camera(width=monitor_area["width"], height=monitor_area["height"], fps=FPS) as cam:
