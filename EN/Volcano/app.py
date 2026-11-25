@@ -1,9 +1,11 @@
 import json  # Import the built-in json module to read and write JSON data (Importuje wbudowany moduł json do czytania i zapisywania danych JSON)
+import folium
 import numpy as np  # Import NumPy as np for fast math on lists of numbers (Importuje NumPy jako np do szybkiej matematyki na listach liczb)
 import requests  # Import requests to download data from web APIs over HTTP (Importuje requests do pobierania danych ze stron i API przez internet)
 from scipy.spatial import cKDTree  # Import cKDTree from SciPy to fast-search nearest points in space (Importuje cKDTree z SciPy do szybkiego szukania najbliższych punktów w przestrzeni)
 
 API_URL = "https://volcanoes.usgs.gov/vsc/api/volcanoApi/"  # Store the USGS volcano API address in a text variable (Zapisuje adres API wulkanów USGS w zmiennej tekstowej)
+OUTPUT_MAP_FILE = "volcano_map.html"
 
 FALLBACK_VOLCANOES = [  # Create a backup list of volcanoes in case the internet or API fails (Tworzy zapasową listę wulkanów na wypadek braku internetu lub błędu API)
     {"name": "Kilauea", "lat": 19.4069, "lon": -155.2834, "alert_level": 3},  # Dictionary for Kilauea with name, latitude, longitude, and alert score (Słownik dla Kilauea z nazwą, szerokością, długością i poziomem alertu)
@@ -53,3 +55,57 @@ def analyze_volcanoes(volcanoes: list[dict]) -> dict:  # Define a function that 
 
     tree = cKDTree(coords)  # Build a SciPy spatial tree from coordinates for fast neighbor lookup (Buduje drzewo przestrzenne SciPy ze współrzędnych do szybkiego szukania sąsiadów)
     distances, neighbor_indices = tree.query(coords, k=2)  # Find the 2 closest points to each volcano (itself at index 0 and nearest neighbor at index 1) (Szuka 2 najbliższych punktów dla każdego wulkanu: siebie i sąsiada)
+
+    enriched = []  # Create a list to hold volcanoes enriched with analysis results (Tworzy listę na wulkany wzbogacone o wyniki analizy)
+    for idx, vol in enumerate(volcanoes):  # Loop over volcanoes together with their index number (Pętla po wulkanach wraz z ich numerem indeksu)
+        nearest_idx = int(neighbor_indices[idx, 1])  # Get the index of the closest neighboring volcano (Pobiera indeks najbliższego sąsiedniego wulkanu)
+        nearest_dist_deg = float(distances[idx, 1])  # Get coordinate distance to that nearest neighbor (Pobiera odległość we współrzędnych do najbliższego sąsiada)
+        enriched.append({  # Add a dictionary with original data plus NumPy/SciPy metrics (Dodaje słownik z oryginalnymi danymi oraz wynikami z NumPy i SciPy)
+            **vol,  # Copy all existing keys and values from the volcano dictionary (Kopiuje wszystkie istniejące klucze i wartości ze słownika wulkanu)
+            "alert_z_score": round(float(z_scores[idx]), 2),  # Add rounded alert z-score (Dodaje zaokrąglony z-score poziomu alertu)
+            "nearest_volcano": volcanoes[nearest_idx]["name"],  # Add the name of the closest neighbor volcano (Dodaje nazwę najbliższego sąsiedniego wulkanu)
+            "nearest_lat": volcanoes[nearest_idx]["lat"],
+            "nearest_lon": volcanoes[nearest_idx]["lon"],
+            "nearest_distance_deg": round(nearest_dist_deg, 2),  # Add distance in degrees to the closest neighbor (Dodaje odległość w stopniach do najbliższego sąsiada)
+        })  # Close the enriched volcano dictionary (Zamyka słownik wzbogaconego wulkanu)
+
+    return {  # Return a summary dictionary with overall stats and per-volcano results (Zwraca słownik podsumowujący z ogólnymi statystykami i wynikami dla każdego wulkanu)
+        "total_volcanoes": len(volcanoes),  # Store how many volcanoes were analyzed (Zapisuje liczbę przeanalizowanych wulkanów)
+        "mean_alert": round(mean_alert, 2),  # Store rounded average alert level (Zapisuje zaokrąglony średni poziom alertu)
+        "volcanoes": enriched,  # Store the detailed list of volcanoes (Zapisuje szczegółową listę wulkanów)
+    }  # Close the returned summary dictionary (Zamyka zwracany słownik podsumowujący)
+
+def alert_to_color(alert_level: int) -> str:
+    if alert_level >= 3:
+        return "red"
+    if alert_level == 2:
+        return "orange"
+    return "green"
+
+def build_map(report: dict, output_path: str) -> None:
+    volcanoes = report["volcanoes"] 
+    center_lat = float(np.mean([v["lat"] for v in volcanoes]))
+    center_lon = float(np.mean([v["lon"] for v in volcanoes]))
+
+    volcano_map = folium.Map(location=[center_lat, center_lon], zoom_start=3)
+
+    for vol in volcanoes:  # Loop through each volcano to add its marker and neighbor line (Pętla po każdym wulkanie, aby dodać jego pinezkę i linię do sąsiada)
+        popup_text = (  # Build multi-line popup HTML text with volcano stats (Tworzy wielolinijkowy tekst okienka popup ze statystykami wulkanu)
+            f"<b>{vol['name']}</b><br>"  # Show volcano name in bold (Pokazuje nazwę wulkanu pogrubioną czcionką)
+            f"Alert level: {vol['alert_level']}<br>"  # Show numeric alert level (Pokazuje liczbowy poziom alertu)
+            f"Alert z-score: {vol['alert_z_score']}<br>"  # Show NumPy z-score metric (Pokazuje wskaźnik z-score obliczony w NumPy)
+            f"Nearest: {vol['nearest_volcano']} ({vol['nearest_distance_deg']} deg)"  # Show nearest volcano and distance in degrees (Pokazuje najbliższy wulkan i odległość w stopniach)
+        )  # Finish building the popup text string (Kończy składanie tekstu okienka popup)
+
+        folium.CircleMarker(
+            location=[[vol["lat"], vol["lon"]], [vol["nearest_lat"], vol
+        )
+
+def main() -> None:  # Define the main entry-point function of the program (Definiuje główną funkcję startową programu)
+    volcanoes = fetch_volcanoes(API_URL)  # Fetch volcano data from the API or fallback list (Pobiera dane o wulkanach z API lub z listy zapasowej)
+    report = analyze_volcanoes(volcanoes)  # Run NumPy and SciPy analysis on the fetched volcanoes (Uruchamia analizę NumPy i SciPy na pobranych wulkanach)
+    print(json.dumps(report, indent=2))  # Print the final report formatted nicely as readable JSON (Wypisuje końcowy raport ładnie sformatowany jako czytelny JSON)
+
+
+if __name__ == "__main__":  # Run main() only when executing this file directly, not when importing it (Uruchamia main() tylko przy bezpośrednim odpaleniu pliku, a nie przy imporcie)
+    main()  # Call the main function to start the script (Wywołuje funkcję main, aby uruchomić skrypt)
