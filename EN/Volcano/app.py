@@ -16,13 +16,26 @@ FALLBACK_VOLCANOES = [  # Create a backup list of volcanoes in case the internet
     {"name": "Redoubt", "lat": 60.4850, "lon": -152.7420, "alert_level": 1},  # Dictionary for Redoubt volcano data (Słownik z danymi wulkanu Redoubt)
 ]  # Close the backup list of volcanoes (Zamyka zapasową listę wulkanów)
 
---- tu
-FALLBACK_WORLD_GEOJSON = {
-    "type": "FeatureCollection",
-    "features": [
-        { }
-    ]
-}
+FALLBACK_WORLD_GEOJSON = {  # Create a simple backup GeoJSON polygon so the map still has land shapes offline (Tworzy prosty zapasowy wielokąt GeoJSON, żeby mapa miała ląd nawet offline)
+    "type": "FeatureCollection",  # Define GeoJSON root type as a collection of features (Określa główny typ GeoJSON jako kolekcję obiektów geograficznych)
+    "features": [  # Start the list of geographic shapes (Rozpoczyna listę kształtów geograficznych)
+        {  # Create one simple rectangular land block as a fallback (Tworzy jeden prosty prostokątny blok lądu jako zabezpieczenie)
+            "type": "Feature",  # Define this item as a single GeoJSON feature (Określa ten element jako pojedynczy obiekt GeoJSON)
+            "properties": {"name": "Fallback Landmass"},  # Attach basic metadata properties to the shape (Dodaje podstawowe właściwości opisowe do kształtu)
+            "geometry": {  # Define the geometry of the shape (Definiuje geometrię kształtu)
+                "type": "Polygon",  # Set geometry type to a closed polygon (Ustawia typ geometrii na zamknięty wielokąt)
+                "coordinates": [[  # Start list of [longitude, latitude] points (GeoJSON uses lon first, then lat) (Zaczyna listę punktów [długość, szerokość] — GeoJSON daje najpierw lon, potem lat)
+                    [-170.0, -60.0],  # Bottom-left corner point in [lon, lat] format (Lewy dolny punkt narożny w formacie [lon, lat])
+                    [170.0, -60.0],  # Bottom-right corner point in [lon, lat] format (Prawy dolny punkt narożny w formacie [lon, lat])
+                    [170.0, 75.0],  # Top-right corner point in [lon, lat] format (Prawy górny punkt narożny w formacie [lon, lat])
+                    [-170.0, 75.0],  # Top-left corner point in [lon, lat] format (Lewy górny punkt narożny w formacie [lon, lat])
+                    [-170.0, -60.0],  # Repeat first point to close the polygon loop (Powtarza pierwszy punkt, żeby zamknąć pętlę wielokąta)
+                ]],  # Close coordinate ring and outer list (Zamyka pierścień współrzędnych i zewnętrzną listę)
+            },  # Close geometry dictionary (Zamyka słownik geometrii)
+        }  # Close feature dictionary (Zamyka słownik obiektu)
+    ],  # Close features list (Zamyka listę obiektów)
+}  # Close fallback GeoJSON dictionary (Zamyka zapasowy słownik GeoJSON)
+
 
 def fetch_volcanoes(url: str) -> list[dict]:  # Define a function that fetches volcano data and returns a list of dictionaries (Definiuje funkcję pobierającą dane o wulkanach i zwracającą listę słowników)
     try:  # Start a safe block that catches network or parsing errors without crashing (Rozpoczyna bezpieczny blok, który łapie błędy sieci i nie wywala programu)
@@ -92,20 +105,41 @@ def alert_to_color(alert_level: int) -> str:  # Define a helper function that ma
     return "green"  # Return green for low/normal alert (Zwraca zielony kolor dla niskiego lub normalnego alertu)
 
 
+def load_world_geojson(url: str) -> dict:  # Define a function that loads world country shapes or falls back safely (Definiuje funkcję ładującą kształty państw lub bezpiecznie używającą zapasu)
+    try:  # Start a safe block that catches network or JSON errors (Rozpoczyna bezpieczny blok łapiący błędy sieci lub JSON)
+        resp = requests.get(url, timeout=10)  # Download the world GeoJSON file with a 10-second timeout (Pobiera plik GeoJSON świata z limitem czasu 10 sekund)
+        resp.raise_for_status()  # Raise an error if HTTP status is not OK (Zgłasza błąd, jeśli status HTTP nie jest poprawny)
+        data = resp.json()  # Parse the JSON response into a Python dictionary (Zamienia odpowiedź JSON na słownik w Pythonie)
+        if isinstance(data, dict) and data.get("features"):  # Check that the downloaded GeoJSON contains features (Sprawdza, czy pobrany GeoJSON zawiera obiekty geograficzne)
+            return data  # Return the real world countries GeoJSON (Zwraca prawdziwy GeoJSON z państwami świata)
+        return FALLBACK_WORLD_GEOJSON  # Return fallback shape if data structure is unexpected (Zwraca zapasowy kształt, jeśli struktura danych jest inna niż oczekiwano)
+    except Exception:  # Catch any exception such as no internet or timeout (Łapie dowolny błąd, np. brak internetu lub przekroczenie czasu)
+        return FALLBACK_WORLD_GEOJSON  # Return the built-in fallback GeoJSON so map generation never crashes (Zwraca wbudowany zapasowy GeoJSON, żeby generowanie mapy nigdy nie padło)
+
+
 def build_map(report: dict, output_path: str) -> None:  # Define a function that creates and saves the Folium HTML map (Definiuje funkcję tworzącą i zapisującą interaktywną mapę HTML w Folium)
     volcanoes = report["volcanoes"]  # Extract the enriched list of volcanoes from the report (Wyciąga z raportu wzbogaconą listę wulkanów)
     center_lat = float(np.mean([v["lat"] for v in volcanoes]))  # Compute average latitude so the map starts centered near the data (Liczy średnią szerokość, żeby mapa wyśrodkowała się blisko danych)
     center_lon = float(np.mean([v["lon"] for v in volcanoes]))  # Compute average longitude for the initial map center (Liczy średnią długość dla początkowego środka mapy)
 
-    volcano_map = folium.Map(location=[center_lat, center_lon], zoom_start=3, tiles=None)  # Create an empty Folium map without default blocked tiles (Tworzy pustą mapę Folium bez domyślnych, zablokowanych kafelków)
+    volcano_map = folium.Map(  # Create a Folium map object (Tworzy obiekt mapy Folium)
+        location=[center_lat, center_lon],  # Set initial center coordinates [lat, lon] (Ustawia początkowe współrzędne środka [lat, lon])
+        zoom_start=3,  # Set initial zoom level (Ustawia początkowy poziom przybliżenia)
+        tiles=None,  # Disable external tile servers that block requests or require API keys (Wyłącza zewnętrzne serwery kafelków, które blokują ruch lub wymagają klucza API)
+    )  # Finish creating the map object (Kończy tworzenie obiektu mapy)
 
-    TileLayer(  # Create a custom tile layer that avoids the OSM 403 block (Tworzy własną warstwę kafelków, która omija blokadę 403 z OSM)
-        tiles="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png",  # URL template for clean CartoDB Positron map tiles (Adres URL szablonu czystych kafelków mapy CartoDB Positron)
-        attr='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',  # Required attribution text shown on the map (Wymagany tekst z informacją o autorach wyświetlany na mapie)
-        name="CartoDB Positron",  # Give the map layer a readable name (Nadaje warstwie mapy czytelną nazwę)
-        max_zoom=19,  # Set maximum zoom level supported by these tiles (Ustawia maksymalny poziom przybliżenia obsługiwany przez te kafelki)
-        user_agent="VolcanoPortfolioAnalyzer/1.0 (student portfolio project)",  # Send a custom User-Agent identifying your app (Wysyła własny User-Agent identyfikujący Twoją aplikację)
-    ).add_to(volcano_map)  # Add the custom tile layer onto the map (Dodaje własną warstwę kafelków do mapy)
+    world_data = load_world_geojson(WORLD_GEOJSON_URL)  # Load world countries GeoJSON or fallback geometry (Ładuje GeoJSON państw świata lub geometrię zapasową)
+
+    folium.GeoJson(  # Add country/land polygons onto the map without needing external map tiles (Dodaje wielokąty państw/lądu na mapę bez potrzeby używania zewnętrznych kafelków)
+        world_data,  # Pass the GeoJSON data dictionary (Przekazuje słownik z danymi GeoJSON)
+        name="World Countries",  # Give the vector layer a name (Nadaje warstwie wektorowej nazwę)
+        style_function=lambda _feature: {  # Define visual styling for each country polygon (Definiuje wygląd każdego wielokąta państwa)
+            "fillColor": "#e8ecef",  # Set light gray fill color for land (Ustawia jasnoszary kolor wypełnienia lądu)
+            "color": "#7a869a",  # Set border line color between countries (Ustawia kolor linii granic między państwami)
+            "weight": 1,  # Set border line width in pixels (Ustawia grubość linii granicy w pikselach)
+            "fillOpacity": 0.9,  # Set land fill opacity (Ustawia krycie wypełnienia lądu)
+        },  # Finish style_function dictionary (Zamyka słownik style_function)
+    ).add_to(volcano_map)  # Add the GeoJson layer onto the map (Dodaje warstwę GeoJson do mapy)
 
     for vol in volcanoes:  # Loop through each volcano to add its marker and neighbor line (Pętla po każdym wulkanie, aby dodać jego pinezkę i linię do sąsiada)
         popup_text = (  # Build multi-line popup HTML text with volcano stats (Tworzy wielolinijkowy tekst okienka popup ze statystykami wulkanu)

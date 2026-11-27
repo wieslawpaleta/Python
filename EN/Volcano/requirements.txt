@@ -1,0 +1,4 @@
+folium>=0.15.0  # Install folium to generate the interactive HTML map (Instaluje folium do generowania interaktywnej mapy HTML)
+numpy>=1.26.0  # Install NumPy for fast numerical arrays and statistics (Instaluje NumPy do szybkich tablic liczbowych i statystyk)
+requests>=2.31.0  # Install requests to fetch JSON data over HTTP (Instaluje requests do pobierania danych JSON przez HTTP)
+scipy>=1.11.0  # Install SciPy for spatial tree search with cKDTree (Instaluje SciPy do szybkiego wyszukiwania przestrzennego z cKDTree)
